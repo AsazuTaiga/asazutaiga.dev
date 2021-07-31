@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.markdown ol {
+  @apply list-decimal pl-10;
+}
+.markdown ul {
+  @apply list-disc pl-10;
+}
+.markdown h4 {
+  @apply text-lg border-b border-black my-5;
+}
+
+.markdown h2 {
+  @apply text-2xl font-bold mt-10 italic;
+}
+.markdown ul {
+  @apply list-disc pl-10;
+}
+
+.markdown p {
+  @apply mt-5 mb-5;
+}
+
+* {
+  font-family: 'Noto Sans', sans-serif;
+}
