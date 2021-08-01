@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { useTheme } from '../hooks/useTheme'
 
 type Props = {
   post: PostWithSlug
@@ -6,10 +7,14 @@ type Props = {
 
 export const Card: React.VFC<Props> = ({ post }) => {
   const href = `/post/${post.slug}`
+  const { theme } = useTheme()
+  const bgColor = theme === 'light' ? 'bg-yellow-100' : 'bg-gray-700'
+  const hoverColor =
+    theme === 'light' ? 'hover:bg-yellow-200' : 'hover:bg-gray-600'
   return (
     <section className="mt-20 mb-20 cursor-pointer">
       <Link href={href}>
-        <div className="bg-yellow-100 hover:bg-yellow-200 rounded-lg p-4 hover:shadow-md transition-all duration-300">
+        <div className={`${bgColor} ${hoverColor} rounded-lg p-4`}>
           <div className="flex items-center">
             <div className="text-5xl">{post.metadata.emoji}</div>
             <div className="flex-col ml-3 font-bold italic">

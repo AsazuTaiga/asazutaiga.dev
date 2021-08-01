@@ -25,7 +25,7 @@ const HomePage: NextPage<StaticProps> = (proprs) => {
         <Container>
           <Logo />
           {proprs.posts.map((post) => (
-            <Card post={post} />
+            <Card post={post} key={post.slug} />
           ))}
           <Me />
           <Copy />
