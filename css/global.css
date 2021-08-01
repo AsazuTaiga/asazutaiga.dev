@@ -12,6 +12,10 @@
   @apply text-lg border-b border-black my-5;
 }
 
+.markdown h1 {
+  @apply text-3xl font-bold mt-10 italic;
+}
+
 .markdown h2 {
   @apply text-2xl font-bold mt-10 italic;
 }
@@ -23,6 +27,10 @@
   @apply mt-5 mb-5;
 }
 
+.markdown a {
+  @apply underline text-blue-700
+}
+
 * {
-  font-family: 'Noto Sans', sans-serif;
+  font-family: 'Noto Sans JP', sans-serif;
 }
