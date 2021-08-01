@@ -28,3 +28,62 @@ tailwind.config.jsをうまく使えば、それだけでtailwindを土台にデ
 markdownのmetaの部分に、絵文字やタイトルや作成日を入れているのですが、これを変換するために[markdown-yaml-metadata-parser](https://github.com/ilterra/markdown-yaml-metadata-parser)というライブラリを使わせてもらってます。ミニマムな機能が提供されていてとてもいいのですが、型情報がないので、d.tsを自分で書きました。[このブログのリポジトリ](https://github.com/AsazuTaiga/tailwind-next-blog)の中に置いているので、どうせなら@typesとかにPR送ってみようかな……と思いつつ結構めんどくさそうなので二の足を踏んでます😢
 
 （何か他に書くべきこと思い出したら追記します）
+
+# 追記
+
+シンタックスハイライトできるようにしました。
+markdownのレンダリングは[react-markdwon](https://github.com/remarkjs/react-markdown)を使っていて、これに[react-syntax-highlighter](https://github.com/react-syntax-highlighter/react-syntax-highlighter)を組み合わせてます。
+
+ほぼ公式で紹介されてるやり方そのままですが、力業感がありますね。
+
+```tsx
+// CodeBlock.tsx
+import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter'
+import {
+  duotoneLight,
+  duotoneDark,
+} from 'react-syntax-highlighter/dist/cjs/styles/prism'
+import tsx from 'react-syntax-highlighter/dist/cjs/languages/prism/tsx'
+import { useTheme } from '../hooks/useTheme'
+
+type Props = {
+  language?: string
+  value: string
+}
+
+SyntaxHighlighter.registerLanguage('tsx', tsx)
+
+export const CodeBlock: React.VFC<Props> = ({ language, value }) => {
+  const { theme } = useTheme()
+  const style = theme === 'light' ? duotoneLight : duotoneDark
+  return (
+    <SyntaxHighlighter language={language} style={style}>
+      {value}
+    </SyntaxHighlighter>
+  )
+}
+```
+
+```tsx
+// [slug].tsx
+// いろいろ省略
+// ...
+    <Markdown
+      components={{
+        code({ inline, className, children }) {
+          const match = /language-(\w+)/.exec(className || '')
+          return !inline && match ? (
+            <CodeBlock
+              language={match[1]}
+              value={children.toString().replace(/\n$/, '')}
+            />
+          ) : (
+            <code className={className}>{children}</code>
+          )
+        },
+      }}
+    >
+      {post.content}
+    </Markdown>
+// ...
+```

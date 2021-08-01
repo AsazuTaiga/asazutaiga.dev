@@ -7,6 +7,7 @@ import Markdown from 'react-markdown'
 import { Logo } from '../../components/Logo'
 import { Me } from '../../components/Me'
 import { Copy } from '../../components/Copy'
+import { CodeBlock } from '../../components/CodeBlock'
 
 type StaticPaths = {
   slug: string
@@ -40,7 +41,23 @@ const PostPage: NextPage<StaticProps> = (props) => {
             {post.metadata.createdAt}
           </div>
           <div className="markdown mt-10">
-            <Markdown>{post.content}</Markdown>
+            <Markdown
+              components={{
+                code({ inline, className, children }) {
+                  const match = /language-(\w+)/.exec(className || '')
+                  return !inline && match ? (
+                    <CodeBlock
+                      language={match[1]}
+                      value={children.toString().replace(/\n$/, '')}
+                    />
+                  ) : (
+                    <code className={className}>{children}</code>
+                  )
+                },
+              }}
+            >
+              {post.content}
+            </Markdown>
           </div>
           <Me />
           <Copy />

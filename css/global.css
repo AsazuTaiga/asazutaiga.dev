@@ -28,9 +28,9 @@
 }
 
 .markdown a {
-  @apply underline text-blue-700
+  @apply underline text-blue-700;
 }
 
-* {
+*:not(code *) {
   font-family: 'Noto Sans JP', sans-serif;
 }
