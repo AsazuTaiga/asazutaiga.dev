@@ -89,3 +89,14 @@ botにcloseされたらそれはそれで残念ですが仕方ないな…って
 （参考）
 
 [TypeScript: Documentation - Generics - Generic Constraints](https://www.typescriptlang.org/docs/handbook/2/generics.html#generic-constraints)
+
+
+## 追記
+
+ちゃんと調べたつもりだったんですが、out of dateになってるPRの中でちょうど「`unknown`がいいんじゃない？」っていうやりとりを見つけたので、Issueの方にも追記しておきました。
+
+こちらはデフォルトの型引数を`never`にするという提案でしたが、当時はTypeScript 2系にaxiosが依存していたようで、`unknown`が使えなかったみたいです。
+
+[Make the default type of response data never #3002](https://github.com/axios/axios/pull/3002)
+
+これ見ると、`extends`じゃなくてデフォルト型引数でいいかもしれないですね。
