@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.4.0",
+    "axios": "^0.21.1",
     "dayjs": "^1.10.6",
     "markdown-yaml-metadata-parser": "^3.0.0",
     "next": "11.0.1",

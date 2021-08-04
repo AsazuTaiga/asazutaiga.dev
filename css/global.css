@@ -27,9 +27,18 @@
   @apply mt-5 mb-5;
 }
 
-.markdown a {
+.light .markdown a {
   @apply underline text-blue-700;
 }
+
+.dark .markdown a {
+  @apply underline text-blue-400;
+}
+
+.markdown blockquote {
+  @apply pl-6 border-l-8 opacity-80;
+}
+
 
 *:not(code *) {
   font-family: 'Noto Sans JP', sans-serif;
