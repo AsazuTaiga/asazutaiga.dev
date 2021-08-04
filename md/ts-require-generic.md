@@ -7,9 +7,9 @@ genre: "tech"
 tags: ["TypeScript"]
 ---
 
-# 型引数を必須にしたい
+# Ｔを指定しないとanyになるaxios.get
 
-いつも通りaxios.get()を書いているときにふと思いました。「型引数のTを必須にすれば、このanyを消せるのでは？」と。
+いつも通り`axios.get()`を書いているときにふと思いました。「型引数の`T`を必須にすれば、この`any`を消せるのでは？」と。
 
 ```tsx
 const asyncFunction = async () => {
@@ -20,9 +20,9 @@ const asyncFunction = async () => {
 }
 ```
 
-Ｔを指定し忘れたのか、意図的に指定しなかったのかは分かりませんが、dataがanyになってしまいました。これを防ぐためには「Ｔを指定し忘れたらエラーになるようにする」のが手っ取り早そうです。
+`Ｔ`を指定し忘れたのか、意図的に指定しなかったのかは分かりませんが、`data`が`any`になってしまいました。これを防ぐためには「`Ｔ`を指定し忘れたらエラーになるようにする」のが手っ取り早そうです。
 
-## ネットの知恵
+# 型引数を必須にしたい
 
 ※ここではaxiosのことは一旦忘れてください。
 
@@ -51,21 +51,30 @@ get<User>('/user-url');
 
 なるほど。泥臭さはあるけど、悪くないかも……って感じですね。
 
-# そもそもなぜ型引数を省略するとanyになる（ことが多い）のか
+# <T extends unknown>という小技
 
-見方を変えればこれは問題でもなんでもないのでは？というのが以下の話です。（なので、個人的には↑のやり方は推奨しません。紹介しといてなんだって話ですが）
+さすがに↑みたいなやり方を`axios.get()`に求めるのはなんか違う気がします。というかそもそもの話、「型引数を必須にする」という考え方よりは、「正しい型引数が指定されるようにする」という考え方をすべきなのでしょう。
 
-[TypeScript: Documentation - Generics - Generic Constraints](https://www.typescriptlang.org/docs/handbook/2/generics.html#generic-constraints)
+axios.getはAPIレスポンスの型なので、ユーザがどんな形にでも型を定義できるはずですから、「正しい型引数」とはなんやねん？となって、結局`<T>`（暗黙的には`<T extends any>`）に落ち着きそうになる気持ちをぐっとこらえます。
 
-上に挙げたStackOverflowの例でも使われているのが、Generic Constratnts（制約付きジェネリクス）です。
+じゃあどうするのが正解なのか？というと、`<T extends unknown>`が落としどころなんじゃないかと思います。
 
-もしanyを許容したくないのであれば、そもそも「こういう型を拡張した型引数以外は受け付けませんよ」と明示すればいいわけなので、適切にGeneric Constraintsを書くべきなわけです。
+```tsx
+// if <T extends unknown>
+const asyncFunction = async () => {
+  const response = await axios.get('/path/to/endpoint')
+  const data = response.data // unknown
+  // const foo= data.foo // type error
+  if (data.foo) { // 型検査が必須になる😄 
+    const foo = data.foo
+    // ...
+  }
+}
+```
 
 ## なぜaxios.getは<T>のConstraintsを指定しないのか
 
-ここでちょっとaxiosの気持ちを想像してみたのですが、「なぜ<T extends unknow>にしないのか？」がちょっと分かりませんでした。
-
-どんなレスポンスボディが返ってくるのか、あるいはvoid（空）なのかということは、axios側では知る由がない外の世界の話です。なので、Constraintsを厳密に指定できないのは当然です。しかし、unknown型はプロパティアクセスをする前に型の検査が必要となるので、より型安全です。もし使われていない理由があるとしたら、unknownがTypeScript 3.0移行に導入されたものだから対応が漏れている（あるいはbreaking changesになるから入れられていない）くらいしかないかな、と予想しました。
+axiosの気持ちを想像してみたのですが、「なぜ`<T extends unknow>`にしないのか？」が分かりません。`unknown`型はプロパティアクセスをする前に型の検査が必要となるので、より型安全です。もし使われていない理由があるとしたら、`unknown`がTypeScript 3.0移行に導入されたものだから対応が漏れている（あるいはbreaking changesになるから入れられていない）くらいしかないかな、と予想しました。
 
 疑念を持ちつつGitHubのissueを覗いてみたら、過去に同じことを考えている人がいたみたいです。ただし、残念ながらプロジェクトテンプレートに従っていないので、botによりcloseされていました。
 
@@ -76,4 +85,8 @@ get<User>('/user-url');
 [Use unknown type instead of any for Typescript definitions of response types #3933](https://github.com/axios/axios/issues/3933)
 
 これがどういった経過をたどるか分かりませんが、しばらく観察してみようと思います。
-botにcloseされたら泣きます。
+botにcloseされたらそれはそれで残念ですが仕方ないな…って感じです。
+
+（参考）
+
+[TypeScript: Documentation - Generics - Generic Constraints](https://www.typescriptlang.org/docs/handbook/2/generics.html#generic-constraints)
