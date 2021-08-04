@@ -83,7 +83,7 @@ axiosの気持ちを想像してみたのですが、「なぜ`<T extends unknow
 [Use unknown type instead of any for Typescript definitions of response types #3933](https://github.com/axios/axios/issues/3933)
 
 これがどういった経過をたどるか分かりませんが、しばらく観察してみようと思います。
-ここ何日か、日本のTwitteｒを中心に「[Project dead? #3930](https://github.com/axios/axios/issues/3930)」というissueが話題になったりもしているので、回答が来るかは分かりませんが。。。
+ここ何日か、日本のTwitterを中心に「[Project dead? #3930](https://github.com/axios/axios/issues/3930)」というissueが話題になったりもしているので、回答が来るかは分かりませんが。。。
 botにcloseされたらそれはそれで残念ですが仕方ないな…って感じです。
 
 （参考）
