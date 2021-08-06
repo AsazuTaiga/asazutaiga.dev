@@ -107,4 +107,4 @@ botにcloseされたらそれはそれで残念ですが仕方ないな…って
 
 サンプルコードを少し修正しました。（型ガードが必要であることを明示）
 
-それと、carloshida氏が[Improved type-safety for AxiosRequestConfig](https://github.com/axios/axios/pull/2995)というPRを作ってくれているとコメントをもらったので、issueはとじました。`AxiosRequestConfig`で指定できるようにする、という後方互換性も考えられためっちゃスマートな回答。めっちゃ勉強になりました。
+それと、Carlos Chida([@carloschida](https://github.com/carloschida))氏が[Improved type-safety for AxiosRequestConfig](https://github.com/axios/axios/pull/2995)というPRを作ってくれているとコメントをもらったので、issueはとじました。`AxiosRequestConfig`で指定できるようにする、という後方互換性も考えられためっちゃスマートな回答。めっちゃ勉強になりました。
