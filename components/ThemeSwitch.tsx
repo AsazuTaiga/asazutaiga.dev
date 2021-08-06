@@ -7,7 +7,7 @@ export const ThemeSwitch: React.VFC = () => {
   return (
     <Switch
       as="button"
-      name="ダークモード切り替え"
+      aria-label="ダークモード切り替え"
       checked={checked}
       onChange={(checked) => {
         if (checked) {

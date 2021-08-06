@@ -12,7 +12,7 @@ export const Card: React.VFC<Props> = ({ post }) => {
   const hoverColor =
     theme === 'light' ? 'hover:bg-yellow-200' : 'hover:bg-gray-600'
   return (
-    <section className="mt-20 mb-20 cursor-pointer">
+    <section className="cursor-pointer">
       <Link href={href}>
         <div className={`${bgColor} ${hoverColor} rounded-lg p-4`}>
           <div className="flex items-center">

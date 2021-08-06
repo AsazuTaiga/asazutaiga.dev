@@ -9,7 +9,7 @@ import { useTheme } from '../hooks/useTheme'
 export const Me: React.VFC = () => {
   const { theme } = useTheme()
   return (
-    <div className="flex justify-center mt-10">
+    <div className="flex justify-center">
       <div className="border-2 border-black rounded-3xl w-20 h-20 overflow-hidden">
         <Image src={me} alt="Asazu Taiga" />
       </div>
