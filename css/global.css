@@ -13,11 +13,11 @@
 }
 
 .markdown h1 {
-  @apply text-3xl font-bold mt-10 italic;
+  @apply text-3xl font-bold mt-10;
 }
 
 .markdown h2 {
-  @apply text-2xl font-bold mt-10 italic;
+  @apply text-2xl font-bold mt-10;
 }
 .markdown ul {
   @apply list-disc pl-10;
@@ -40,6 +40,10 @@
 }
 
 
-*:not(code *) {
+.markdown code {
+  @apply text-pink-600;
+}
+
+*:not(code *, code) {
   font-family: 'Noto Sans JP', sans-serif;
 }

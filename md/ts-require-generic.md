@@ -7,7 +7,8 @@ genre: "tech"
 tags: ["TypeScript"]
 ---
 
-# Ｔを指定しないとanyになるaxios.get
+
+# `Ｔ`を指定しないと`any`になる`axios.get`
 
 いつも通り`axios.get()`を書いているときにふと思いました。「型引数の`T`を必須にすれば、この`any`を消せるのでは？」と。
 
@@ -22,7 +23,7 @@ const asyncFunction = async () => {
 
 `Ｔ`を指定し忘れたのか、意図的に指定しなかったのかは分かりませんが、`data`が`any`になってしまいました。これを防ぐためには「`Ｔ`を指定し忘れたらエラーになるようにする」のが手っ取り早そうです。
 
-# 型引数を必須にしたい
+## 型引数を必須にする方法（横道）
 
 ※ここではaxiosのことは一旦忘れてください。
 
@@ -51,28 +52,29 @@ get<User>('/user-url');
 
 なるほど。泥臭さはあるけど、悪くないかも……って感じですね。
 
-# <T extends unknown>という小技
+# `<T = unknown>`という小技
 
 さすがに↑みたいなやり方を`axios.get()`に求めるのはなんか違う気がします。というかそもそもの話、「型引数を必須にする」という考え方よりは、「正しい型引数が指定されるようにする」という考え方をすべきなのでしょう。
 
-axios.getはAPIレスポンスの型なので、ユーザがどんな形にでも型を定義できるはずですから、「正しい型引数」とはなんやねん？という感じですが。`<T extends unknown>`が落としどころなんじゃないかと思います。
+axios.getはAPIレスポンスの型なので、ユーザがどんな形にでも型を定義できるはずですから、「正しい型引数」とはなんやねん？という感じですが。 `<T = unknown>`が落としどころなんじゃないかと思います。 
 
 ```tsx
-// if <T extends unknown>
 const asyncFunction = async () => {
   const response = await axios.get('/path/to/endpoint')
   const data = response.data // unknown
   // const foo= data.foo // type error
-  if (data.foo) { // 型検査が必須になる😄 
+  if (hasFoo(data)) { // 型検査が必須になる😄 
     const foo = data.foo
     // ...
   }
 }
 ```
 
-## Issueを立てたよ
+# Issueを立てたよ
 
-axiosの気持ちを想像してみたのですが、「なぜ`<T extends unknow>`にしないのか？」が分かりません。`unknown`型はプロパティアクセスをする前に型の検査が必要となるので、より型安全です。もし使われていない理由があるとしたら、`unknown`がTypeScript 3.0移行に導入されたものだから対応が漏れている（あるいはbreaking changesになるから入れられていない）くらいしかないかな、と予想しました。
+※あとで書きますが、すでにクローズ済み。
+
+axiosの気持ちを想像してみたのですが、「なぜ`<T extends unknown>`にしないのか？」が分かりません。`unknown`型はプロパティアクセスをする前に型の検査が必要となるので、より型安全です。もし使われていない理由があるとしたら、`unknown`がTypeScript 3.0移行に導入されたものだから対応が漏れている（あるいはbreaking changesになるから入れられていない）くらいしかないかな、と予想しました。
 
 疑念を持ちつつGitHubのissueを覗いてみたら、過去に同じことを考えている人がいたみたいです。ただし、残念ながらプロジェクトテンプレートに従っていないので、botによりcloseされていました。
 
@@ -91,7 +93,7 @@ botにcloseされたらそれはそれで残念ですが仕方ないな…って
 [TypeScript: Documentation - Generics - Generic Constraints](https://www.typescriptlang.org/docs/handbook/2/generics.html#generic-constraints)
 
 
-## 追記
+## Issueについて追記①
 
 ちゃんと調べたつもりだったんですが、out of dateになってるPRの中でちょうど「`unknown`がいいんじゃない？」っていうやりとりを見つけたので、Issueの方にも追記しておきました。
 
@@ -99,4 +101,10 @@ botにcloseされたらそれはそれで残念ですが仕方ないな…って
 
 [Make the default type of response data never #3002](https://github.com/axios/axios/pull/3002)
 
-これ見ると、`extends`じゃなくてデフォルト型引数でいいかもしれないですね。
+これ見ると、`extends`じゃなくてデフォルト型引数でいいかもしれないですね…。=> 本文を修正しました。
+
+## Issueについて追記②（このIssueはクローズしました。）
+
+サンプルコードを少し修正しました。（型ガードが必要であることを明示）
+
+それと、carloshida氏が[Improved type-safety for AxiosRequestConfig](https://github.com/axios/axios/pull/2995)というPRを作ってくれているとコメントをもらったので、issueはとじました。`AxiosRequestConfig`で指定できるようにする、という後方互換性も考えられためっちゃスマートな回答。めっちゃ勉強になりました。
