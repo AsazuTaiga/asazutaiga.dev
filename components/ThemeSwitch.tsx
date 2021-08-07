@@ -23,7 +23,7 @@ export const ThemeSwitch: React.VFC = () => {
       {({ checked }) => (
         <span
           className={`${
-            checked ? 'translate-x-5' : 'translate-x-1'
+            checked ? 'translate-x-1' : 'translate-x-5'
           } block w-5 h-5 duration-200 ease-in-out transform bg-white rounded-full`}
         />
       )}

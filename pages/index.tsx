@@ -2,8 +2,6 @@ import { NextPage, GetStaticProps } from 'next'
 import Head from 'next/head'
 import React from 'react'
 import { Card } from '../components/Card'
-import { Copy } from '../components/Copy'
-import { Me } from '../components/Me'
 import { sortPostsByDate } from '../utils/date'
 import { getPostWithSlug, getSlugs } from '../utils/post'
 
@@ -27,9 +25,6 @@ const HomePage: NextPage<StaticProps> = (proprs) => {
           <div className="h-3" />
         </React.Fragment>
       ))}
-      <div className="h-10" />
-      <Me />
-      <Copy />
     </>
   )
 }
