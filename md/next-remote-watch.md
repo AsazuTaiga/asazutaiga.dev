@@ -74,6 +74,60 @@ npm i -D next-remote-watch
 
 # 余談
 
+## 内部的には`chokidar`を使ってるっぽい
+
+`chokidar`は、ファイルの変更を監視するNode.jsライブラリです。
+
+以下の箇所で、`chokidar`によるファイル監視と、イベント駆動でのホットリロードの発火がざっくりつかめる気がしますね。
+
+[next-remote-watch/next-remote-watch at 6767289c23368ce5d604bd6c60aa0deb63588403 · hashicorp/next-remote-watch](https://github.com/hashicorp/next-remote-watch/blob/6767289c23368ce5d604bd6c60aa0deb63588403/bin/next-remote-watch#L44)
+
+```ts
+app.prepare().then(() => {
+  // if directories are provided, watch them for changes and trigger reload
+  if (program.args.length > 0) {
+    chokidar
+      .watch(program.args, { usePolling: Boolean(program.polling) })
+      .on(
+        program.event,
+        async (filePathContext, eventContext = defaultWatchEvent) => {
+          app.server.hotReloader.send('building')
+          // 中略 by @asazutaiga
+          app.server.hotReloader.send('reloadPage')
+        }
+      )
+  }
+  // 以下略 by @asazutaiga
+```
+
+この場合は、Next.jsのアプリケーション全体を再ビルドしているみたいですね。
+
+## `zenn-editor`のプレビューって爆速だしなんか違うのかな？→websocketだった
+
+`zenn-editor`のmd保存時のプレビュー反映がめっちゃ速くて心地よいと常々思っていましたが、`next-remote-watch`をポン載せしてアプリ全体を再ビルドしている場合と比較してみると一目瞭然でした。
+どうやら、こちらも`chokidar`でファイル監視をしつつ、変更があった場合にはNext.jsの再ビルドを走らせるのではなく、`socket.io`を使ってwebsocket経由で変更反映しているようです。そりゃ速いわけだ！なっとく。
+
+[zenn-editor/index.ts at 7711dac082923a409713d1f17514949f3f8bfa31 · zenn-dev/zenn-editor](https://github.com/zenn-dev/zenn-editor/blob/7711dac082923a409713d1f17514949f3f8bfa31/packages/zenn-cli/cli/preview/index.ts#L54)
+
+```ts
+  if (shouldWatch) {
+    const watcher = chokidar.watch(`${process.cwd()}/{articles,books}/**/*`);
+    const io = new Server(server);
+    watcher.on('change', () => {
+      io.emit('reload');
+    });
+
+    process.on('SIGINT', function () {
+      // `Ctrl-C`の signalを奪って正常終了させる.
+      io.close();
+      watcher.close();
+      process.exit();
+    });
+  }
+  if (shouldOpen) open(previewUrl);
+};
+```
+
 ## ホットリロードってすごいよね
 
 もはやWebフロントエンドの開発では当たり前になっているホットリロード。というか、HMRやらFast Refreshの登場でむしろ愚直すぎるような気もするホットリロード。
