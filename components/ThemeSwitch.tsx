@@ -8,6 +8,7 @@ export const ThemeSwitch: React.VFC = () => {
     <Switch
       as="button"
       aria-label="ダークモード切り替え"
+      aria-checked={checked}
       checked={checked}
       onChange={(checked) => {
         if (checked) {
@@ -23,7 +24,7 @@ export const ThemeSwitch: React.VFC = () => {
       {({ checked }) => (
         <span
           className={`${
-            checked ? 'translate-x-1' : 'translate-x-5'
+            checked ? 'translate-x-5' : 'translate-x-1'
           } block w-5 h-5 duration-200 ease-in-out transform bg-white rounded-full`}
         />
       )}
