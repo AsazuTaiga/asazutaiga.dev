@@ -2,8 +2,6 @@ import { NextPage, GetStaticProps, GetStaticPaths } from 'next'
 import Head from 'next/head'
 import { getPost, getSlugs } from '../../utils/post'
 import Markdown from 'react-markdown'
-import { Me } from '../../components/Me'
-import { Copy } from '../../components/Copy'
 import { CodeBlock } from '../../components/CodeBlock'
 
 type StaticPaths = {
@@ -53,8 +51,6 @@ const PostPage: NextPage<StaticProps> = (props) => {
           {post.content}
         </Markdown>
       </div>
-      <Me />
-      <Copy />
     </>
   )
 }

@@ -6,6 +6,8 @@ import { ThemeSwitch } from '../components/ThemeSwitch'
 import { Logo } from '../components/Logo'
 import { Container } from '../components/Container'
 import { MainWithBack } from '../components/MainWithBack'
+import { Copy } from '../components/Copy'
+import { Me } from '../components/Me'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -15,6 +17,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Container>
           <Logo />
           <Component {...pageProps} />
+          <div className="h-10" />
+          <Me />
+          <Copy />
         </Container>
       </MainWithBack>
     </ThemeProvider>

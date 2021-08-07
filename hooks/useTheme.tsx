@@ -20,13 +20,13 @@ type Props = {
 }
 
 export const ThemeProvider: React.VFC<Props> = ({ children }) => {
-  const [theme, setTheme] = useState<Theme>('light')
+  const [theme, setTheme] = useState<Theme>('dark')
   useEffect(() => {
     const storaged = localStorage.getItem(LOCAL_STORAGE_KEY)
-    if (storaged === 'dark') {
-      setTheme('dark')
-    } else {
+    if (storaged === 'light') {
       setTheme('light')
+    } else {
+      setTheme('dark')
     }
   }, [])
 
