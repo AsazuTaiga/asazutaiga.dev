@@ -11,34 +11,22 @@ type ThemeContextValue = {
   theme: Theme
   setTheme?: (theme: Theme) => void
 }
-const LOCAL_STORAGE_KEY = 'theme'
-
 const ThemeContext = createContext<ThemeContextValue>({ theme: 'light' })
+const getBrowserTheme = () =>
+  window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 
 type Props = {
   children: React.ReactNode
 }
 
 export const ThemeProvider: React.VFC<Props> = ({ children }) => {
-  const [theme, setTheme] = useState<Theme>('dark')
+  const [theme, setTheme] = useState<Theme>('light')
   useEffect(() => {
-    const storaged = localStorage.getItem(LOCAL_STORAGE_KEY)
-    if (storaged === 'light') {
-      setTheme('light')
-    } else {
-      setTheme('dark')
-    }
-  }, [])
-
-  const setThemeWithLocalStorage = useCallback((theme: Theme) => {
-    setTheme(theme)
-    localStorage.setItem(LOCAL_STORAGE_KEY, theme)
+    setTheme(getBrowserTheme())
   }, [])
 
   return (
-    <ThemeContext.Provider
-      value={{ theme, setTheme: setThemeWithLocalStorage }}
-    >
+    <ThemeContext.Provider value={{ theme, setTheme }}>
       {children}
     </ThemeContext.Provider>
   )
