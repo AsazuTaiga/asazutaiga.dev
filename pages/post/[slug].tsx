@@ -26,8 +26,11 @@ const PostPage: NextPage<StaticProps> = (props) => {
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <meta property="og:site_name" content={pageTitle} />
         <meta property="og:image" content={ogpUrl} />
-        <meta name="twitter:card" content="Summary with Large Image" />
+        <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@asazutaiga" />
+        <meta name="twitter:creator" content="@asazutaiga" />
+        <meta name="twitter:title" content={pageTitle} />
+        <meta name="twitter:image" content={ogpUrl} />
       </Head>
       <div className="text-6xl flex justify-center mt-10 mb-10">
         {post.metadata.emoji}
