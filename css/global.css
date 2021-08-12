@@ -13,7 +13,15 @@
 }
 
 .markdown h1 {
-  @apply text-3xl font-bold mt-10;
+  @apply text-2xl font-bold mt-10 p-4 rounded-md;
+}
+
+.dark .markdown h1 {
+  @apply bg-gray-800;
+}
+
+.light .markdown h1 {
+  @apply bg-yellow-200;
 }
 
 .markdown h2 {
@@ -26,6 +34,10 @@
 
 .markdown p {
   @apply mt-5 mb-5;
+}
+
+.markdown img {
+  @apply ml-auto mr-auto;
 }
 
 .light .markdown a {
