@@ -18,13 +18,16 @@ const HomePage: NextPage<StaticProps> = (proprs) => {
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </Head>
       <div className="h-10" />
-      {proprs.posts.map((post) => (
-        <React.Fragment key={post.slug}>
-          <div className="h-3" />
-          <Card post={post} />
-          <div className="h-3" />
-        </React.Fragment>
-      ))}
+      {proprs.posts.map(
+        (post) =>
+          post.metadata.published && (
+            <React.Fragment key={post.slug}>
+              <div className="h-3" />
+              <Card post={post} />
+              <div className="h-3" />
+            </React.Fragment>
+          ),
+      )}
     </>
   )
 }

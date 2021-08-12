@@ -3,6 +3,7 @@ emoji: "📚"
 title: "ブログをリニューアルしました"
 createdAt: "2021/07/31"
 updatedAt: "2021/07/31"
+published: true
 genre: "tech"
 tags: ["blog"]
 ---

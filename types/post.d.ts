@@ -5,6 +5,7 @@ type Post = {
     title: string
     createdAt: string
     updatedAt: string
+    published: boolean
     genre: 'tech' | 'blog'
     tags: string[]
   }

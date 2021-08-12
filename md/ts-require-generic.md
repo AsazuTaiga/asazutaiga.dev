@@ -2,7 +2,8 @@
 emoji: "💙"
 title: "axios.getの<T>を必須にしたいなあと思った話"
 createdAt: "2021/08/05"
-updatedAt: "2021/08/05"
+updatedAt: "2021/08/12"
+published: true
 genre: "tech"
 tags: ["TypeScript"]
 ---
@@ -74,7 +75,7 @@ const asyncFunction = async () => {
 
 ※あとで書きますが、すでにクローズ済み。
 
-axiosの気持ちを想像してみたのですが、「なぜ`<T extends unknown>`にしないのか？」が分かりません。`unknown`型はプロパティアクセスをする前に型の検査が必要となるので、より型安全です。もし使われていない理由があるとしたら、`unknown`がTypeScript 3.0移行に導入されたものだから対応が漏れている（あるいはbreaking changesになるから入れられていない）くらいしかないかな、と予想しました。
+axiosの気持ちを想像してみたのですが、「なぜ`<T = unknown>`にしないのか？」が分かりません。`unknown`型はプロパティアクセスをする前に型の検査が必要となるので、より型安全です。もし使われていない理由があるとしたら、`unknown`がTypeScript 3.0移行に導入されたものだから対応が漏れている（あるいはbreaking changesになるから入れられていない）くらいしかないかな、と予想しました。
 
 疑念を持ちつつGitHubのissueを覗いてみたら、過去に同じことを考えている人がいたみたいです。ただし、残念ながらプロジェクトテンプレートに従っていないので、botによりcloseされていました。
 
