@@ -1,5 +1,6 @@
 import { Switch } from '@headlessui/react'
 import { useTheme } from '../hooks/useTheme'
+import { sendSwitchThemeEvent } from '../utils/gtag'
 
 export const ThemeSwitch: React.VFC = () => {
   const { theme, setTheme } = useTheme()
@@ -13,8 +14,10 @@ export const ThemeSwitch: React.VFC = () => {
       onChange={(checked) => {
         if (checked) {
           setTheme?.('dark')
+          sendSwitchThemeEvent('dark')
         } else {
           setTheme?.('light')
+          sendSwitchThemeEvent('light')
         }
       }}
       className={`${

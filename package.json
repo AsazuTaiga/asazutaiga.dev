@@ -20,6 +20,7 @@
     "remark-gfm": "^2.0.0"
   },
   "devDependencies": {
+    "@types/gtag.js": "^0.0.7",
     "@types/react": "17.0.15",
     "@types/react-syntax-highlighter": "^13.5.2",
     "autoprefixer": "^10.3.1",
