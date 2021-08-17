@@ -11,7 +11,7 @@ export const ThemeContainer: React.VFC<Props> = ({ children }) => {
   const textColor = theme === 'light' ? 'text-gray-900' : 'text-gray-100'
   return (
     <main className={`${theme} ${bgColor} ${textColor} h-screen`}>
-      <div className={`${bgColor} p-10`}>{children}</div>
+      <div className={`${bgColor}`}>{children}</div>
     </main>
   )
 }
