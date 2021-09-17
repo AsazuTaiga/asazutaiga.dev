@@ -22,7 +22,7 @@ export const Card: React.VFC<Props> = ({ post }) => {
               <Twemoji
                 emoji={post.metadata.emoji}
                 size={60}
-                className={`${emojiBgColor} p-2 rounded-md bg-`}
+                className={`${emojiBgColor} p-2 rounded-md flex-shrink-0`}
               />
               <div className="flex-col ml-3 font-bold italic">
                 <div className="text-xl">{post.metadata.title}</div>
