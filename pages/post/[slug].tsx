@@ -4,6 +4,8 @@ import Markdown from 'react-markdown'
 import { CodeBlock } from '../../components/CodeBlock'
 import { getPost, getSlugs } from '../../utils/post'
 import { generateOgpUrl } from '../../utils/ogp'
+import { Twemoji } from '../../components/Twemoji'
+import { useTheme } from '../../hooks/useTheme'
 
 type StaticPaths = {
   slug: string
@@ -15,6 +17,7 @@ type StaticProps = {
 }
 
 const PostPage: NextPage<StaticProps> = (props) => {
+  const { theme } = useTheme()
   const { post, ogpUrl } = { ...props }
   const pageTitle =
     post.metadata.title + ' - お前もインターネットにしてやろうか'
@@ -32,8 +35,14 @@ const PostPage: NextPage<StaticProps> = (props) => {
         <meta name="twitter:title" content={pageTitle} />
         <meta name="twitter:image" content={ogpUrl} />
       </Head>
-      <div className="text-6xl flex justify-center mt-10 mb-10">
-        {post.metadata.emoji}
+      <div className="flex justify-center mt-10 mb-10">
+        <Twemoji
+          emoji={post.metadata.emoji}
+          size={120}
+          className={`p-7 rounded-full ${
+            theme === 'light' ? 'bg-blue-100' : 'bg-yellow-300'
+          }`}
+        />
       </div>
       <h1 className="text-3xl font-bold mt-10 italic leading-tight">
         {post.metadata.title}
