@@ -8,12 +8,21 @@
 .markdown ul {
   @apply list-disc pl-10;
 }
-.markdown h4 {
-  @apply text-lg border-b border-black my-5;
+
+.markdown {
+  @apply text-sm;
+}
+
+.dark .markdown * {
+  @apply border-yellow-400;
+}
+
+.light .markdown * {
+  @apply border-blue-300;
 }
 
 .markdown h1 {
-  @apply text-2xl font-bold mt-10 p-4 rounded-md;
+  @apply text-3xl font-bold mt-10 p-4 rounded-md;
 }
 
 .dark .markdown h1 {
@@ -26,6 +35,14 @@
 
 .markdown h2 {
   @apply text-xl font-bold mt-6;
+}
+
+.markdown h3 {
+  @apply text-lg font-bold mt-6 pl-2 border-l-4;
+}
+
+.markdown h4 {
+  @apply text-sm font-bold mt-6;
 }
 
 .markdown ul {
