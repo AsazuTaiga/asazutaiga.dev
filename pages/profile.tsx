@@ -4,6 +4,12 @@ const ProfilePage: NextPage = () => (
   <div className="mt-10 flex justify-center content-center">
     <div className="max-w-lg">
       <h1 className="text-2xl">Profile</h1>
+      <p className="font-bold text-xs mt-10">
+        私たちは「私は誰なのだろうか？」という問いに、「テーブルとは何ですか？」という問に対するのと同じように答えようとしてしまう。
+      </p>
+      <p className="text-xs mt-2">
+        ――ノーレン・ガーツ『ニヒリズムとテクノロジー』
+      </p>
       <div className="mt-10 grid grid-cols-3 gap-10 p-2">
         <div className="opacity-60 col-span-1">名前</div>
         <div className="col-span-2">Asazu Taiga</div>
