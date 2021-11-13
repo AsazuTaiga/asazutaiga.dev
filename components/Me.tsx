@@ -5,12 +5,17 @@ import twitterDark from '../public/twitter_dark.svg'
 import github from '../public/github.svg'
 import githubDark from '../public/github_dark.svg'
 import { useTheme } from '../hooks/useTheme'
+import { useRouter } from 'next/router'
 
 export const Me: React.VFC = () => {
   const { theme } = useTheme()
+  const router = useRouter()
   return (
     <div className="flex justify-center">
-      <div className="border-2 border-black rounded-3xl w-20 h-20 overflow-hidden">
+      <div
+        className="border-2 border-black rounded-3xl w-20 h-20 overflow-hidden cursor-pointer"
+        onClick={() => router.push('/profile')}
+      >
         <Image src={me} alt="Asazu Taiga" />
       </div>
       <div className="flex ml-4 flex-col">

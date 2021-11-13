@@ -10,7 +10,7 @@ import { Copy } from '../components/Copy'
 import { Me } from '../components/Me'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import { GA_TRACKING_ID, sendPageViewEvent } from '../utils/gtag'
+import { sendPageViewEvent } from '../utils/gtag'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter()
