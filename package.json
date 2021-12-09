@@ -9,13 +9,13 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.4.0",
-    "axios": "^0.21.1",
     "dayjs": "^1.10.6",
     "markdown-yaml-metadata-parser": "^3.0.0",
-    "next": "11.1.0",
+    "next": "^12.0.7",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-markdown": "^6.0.3",
+    "react-snowfall": "^1.1.1",
     "react-syntax-highlighter": "^15.4.4",
     "remark-gfm": "^2.0.0",
     "twemoji": "^13.1.0"

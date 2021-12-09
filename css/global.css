@@ -10,7 +10,7 @@
 }
 
 .markdown {
-  @apply text-sm;
+  @apply text-sm leading-loose;
 }
 
 .dark .markdown * {
