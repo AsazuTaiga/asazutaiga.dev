@@ -11,7 +11,6 @@ import { Me } from '../components/Me'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { sendPageViewEvent } from '../utils/gtag'
-import { NoSsrSnowFall } from '../components/SnowFall'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter()
@@ -31,7 +30,6 @@ function MyApp({ Component, pageProps }: AppProps) {
     <ThemeProvider>
       <ThemeSwitch />
       <ThemeContainer>
-        <NoSsrSnowFall />
         <LayoutContainer>
           <Logo />
           <Component {...pageProps} />
