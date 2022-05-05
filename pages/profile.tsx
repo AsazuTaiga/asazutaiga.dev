@@ -14,7 +14,7 @@ const ProfilePage: NextPage = () => (
         <div className="opacity-60 col-span-1">名前</div>
         <div className="col-span-2">Asazu Taiga</div>
         <div className="opacity-60 col-span-1">職業</div>
-        <div className="col-span-2">Frontend Endgineer</div>
+        <div className="col-span-2">Frontend Engineer</div>
         <div className="opacity-60 col-span-1">関心分野</div>
         <div className="col-span-2">
           Frontend Architecture, Component Design
