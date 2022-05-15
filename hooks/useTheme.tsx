@@ -8,16 +8,22 @@ type ThemeContextValue = {
 const ThemeContext = createContext<ThemeContextValue>({ theme: 'light' })
 const getBrowserTheme = () =>
   window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+const getLocalTheme = () => localStorage.getItem('theme') as Theme | undefined
 
 type Props = {
   children: React.ReactNode
 }
 
 export const ThemeProvider: React.VFC<Props> = ({ children }) => {
-  const [theme, setTheme] = useState<Theme>('light')
+  const [theme, _setTheme] = useState<Theme>('light')
   useEffect(() => {
-    setTheme(getBrowserTheme())
+    setTheme(getLocalTheme() || getBrowserTheme())
   }, [])
+
+  const setTheme = (theme: Theme) => {
+    localStorage.setItem('theme', theme)
+    _setTheme(theme)
+  }
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
