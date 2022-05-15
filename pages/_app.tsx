@@ -3,7 +3,6 @@ import '../css/global.css'
 import type { AppProps } from 'next/app'
 import { ThemeProvider } from '../hooks/useTheme'
 import { ThemeSwitch } from '../components/ThemeSwitch'
-import { Logo } from '../components/Logo'
 import { LayoutContainer } from '../components/LayoutContainer'
 import { ThemeContainer } from '../components/ThemeContainer'
 import { Copy } from '../components/Copy'
@@ -31,7 +30,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       <ThemeSwitch />
       <ThemeContainer>
         <LayoutContainer>
-          <Logo />
           <Component {...pageProps} />
           <div className="h-10" />
           <Me />
