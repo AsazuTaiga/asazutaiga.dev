@@ -19,8 +19,7 @@ type StaticProps = {
 const PostPage: NextPage<StaticProps> = (props) => {
   const { theme } = useTheme()
   const { post, ogpUrl } = { ...props }
-  const pageTitle =
-    post.metadata.title + ' - お前もインターネットにしてやろうか'
+  const pageTitle = post.metadata.title + ' - asazutaiga.dev'
   return (
     <>
       <Head>
