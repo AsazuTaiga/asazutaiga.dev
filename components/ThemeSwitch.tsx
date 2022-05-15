@@ -29,7 +29,7 @@ export const ThemeSwitch: React.VFC = () => {
         <div
           className={`${
             checked
-              ? 'translate-x-5 text-gray-600'
+              ? 'translate-x-6 text-gray-600'
               : 'translate-x-1 text-purple-300'
           } block w-5 h-5 mt-1 duration-200 ease-in-out transform rounded-full`}
         >
