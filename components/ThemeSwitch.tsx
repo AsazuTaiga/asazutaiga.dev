@@ -1,6 +1,7 @@
 import { Switch } from '@headlessui/react'
 import { useTheme } from '../hooks/useTheme'
 import { sendSwitchThemeEvent } from '../utils/gtag'
+import { FiSun, FiMoon } from 'react-icons/fi'
 
 export const ThemeSwitch: React.VFC = () => {
   const { theme, setTheme } = useTheme()
@@ -21,15 +22,19 @@ export const ThemeSwitch: React.VFC = () => {
         }
       }}
       className={`${
-        checked ? 'bg-yellow-300' : 'bg-gray-600'
-      } h-6 rounded-full w-11 fixed top-3 right-3 transition-color duration-200 z-10`}
+        checked ? 'bg-purple-300' : 'bg-gray-600'
+      } h-6 rounded-full w-11 fixed top-5 right-5 transition-color duration-200 z-10 shadow-md`}
     >
       {({ checked }) => (
-        <span
+        <div
           className={`${
-            checked ? 'translate-x-5' : 'translate-x-1'
-          } block w-5 h-5 duration-200 ease-in-out transform bg-white rounded-full`}
-        />
+            checked
+              ? 'translate-x-5 text-gray-600'
+              : 'translate-x-1 text-purple-300'
+          } block w-5 h-5 mt-1 duration-200 ease-in-out transform rounded-full`}
+        >
+          {checked ? <FiMoon /> : <FiSun />}
+        </div>
       )}
     </Switch>
   )

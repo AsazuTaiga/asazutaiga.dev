@@ -39,14 +39,14 @@ const PostPage: NextPage<StaticProps> = (props) => {
           emoji={post.metadata.emoji}
           size={120}
           className={`p-7 rounded-full ${
-            theme === 'light' ? 'bg-blue-100' : 'bg-yellow-300'
+            theme === 'light' ? 'bg-purple-100' : 'bg-purple-300'
           }`}
         />
       </div>
-      <h1 className="text-3xl font-bold mt-10 italic leading-tight">
+      <h1 className="text-3xl font-bold mt-10 leading-tight">
         {post.metadata.title}
       </h1>
-      <div className="underline-red mt-4 text-sm font-bold italic">
+      <div className="underline-red mt-4 text-sm font-bold">
         {post.metadata.createdAt}
       </div>
       <div className="markdown mt-10">

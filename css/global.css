@@ -14,11 +14,11 @@
 }
 
 .dark .markdown * {
-  @apply border-yellow-400;
+  @apply border-purple-400;
 }
 
 .light .markdown * {
-  @apply border-blue-300;
+  @apply border-purple-300;
 }
 
 .markdown h1 {
@@ -30,7 +30,7 @@
 }
 
 .light .markdown h1 {
-  @apply bg-yellow-200;
+  @apply bg-purple-200;
 }
 
 .markdown h2 {
@@ -58,11 +58,11 @@
 }
 
 .light .markdown a {
-  @apply underline text-blue-700;
+  @apply underline text-purple-700;
 }
 
 .dark .markdown a {
-  @apply underline text-blue-400;
+  @apply underline text-purple-400;
 }
 
 .markdown blockquote {

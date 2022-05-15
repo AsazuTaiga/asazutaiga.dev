@@ -13,13 +13,13 @@ export const Me: React.VFC = () => {
   return (
     <div className="flex justify-center">
       <div
-        className="border-2 border-black rounded-3xl w-20 h-20 overflow-hidden cursor-pointer"
+        className="rounded-3xl w-20 h-20 overflow-hidden cursor-pointer shadow-xl"
         onClick={() => router.push('/profile')}
       >
         <Image src={me} alt="Asazu Taiga" />
       </div>
       <div className="flex ml-4 flex-col">
-        <div className="font-bold italic text-2xl">@asazutaiga</div>
+        <div className="font-bold text-2xl">@asazutaiga</div>
         <div className="text-xs mt-2">毎日お風呂に入るのでえらい</div>
         <div className="mt-2 flex flex-row">
           <div className="cursor-pointer">

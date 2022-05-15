@@ -10,6 +10,7 @@ import { Me } from '../components/Me'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { sendPageViewEvent } from '../utils/gtag'
+import { AppBar } from '../components/AppBar'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter()
@@ -27,8 +28,10 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <ThemeProvider>
-      <ThemeSwitch />
+      {/* <ThemeSwitch /> */}
       <ThemeContainer>
+        <AppBar />
+
         <LayoutContainer>
           <Component {...pageProps} />
           <div className="h-10" />
