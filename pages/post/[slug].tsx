@@ -46,9 +46,7 @@ const PostPage: NextPage<StaticProps> = (props) => {
       <h1 className="text-3xl font-bold mt-10 leading-tight">
         {post.metadata.title}
       </h1>
-      <div className="underline-red mt-4 text-sm font-bold">
-        {post.metadata.createdAt}
-      </div>
+      <div className="mt-4 text-sm font-bold">{post.metadata.createdAt}</div>
       <div className="markdown mt-10">
         <Markdown
           components={{

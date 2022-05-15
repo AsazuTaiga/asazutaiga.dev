@@ -4,15 +4,4 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [
-    function ({ addUtilities }) {
-      const extendUnderline = {
-        '.underline-red': {
-          textDecoration: 'underline',
-          'text-decoration-color': 'red',
-        },
-      }
-      addUtilities(extendUnderline)
-    },
-  ],
 }
