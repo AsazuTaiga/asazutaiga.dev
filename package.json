@@ -22,6 +22,7 @@
   },
   "devDependencies": {
     "@types/gtag.js": "^0.0.7",
+    "@types/node": "^18.7.5",
     "@types/react": "17.0.15",
     "@types/react-syntax-highlighter": "^13.5.2",
     "@types/twemoji": "^12.1.2",
