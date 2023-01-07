@@ -23,11 +23,14 @@ const EmbedTweet = ({ id }: { id: string }) => {
 
   useEffect(() => {
     // @ts-ignore
-    window.twttr.widgets.createTweet(id, containerRef.current, {
-      theme,
-      align: 'center',
-      lang: 'ja',
-    })
+    if (window.twttr) {
+      // @ts-ignore
+      window.twttr.widgets.createTweet(id, containerRef.current, {
+        theme,
+        align: 'center',
+        lang: 'ja',
+      })
+    }
   }, [id, theme])
 
   return <div ref={containerRef}></div>
