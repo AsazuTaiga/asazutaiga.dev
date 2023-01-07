@@ -27,20 +27,33 @@ const EmbedTweet = ({
 }) => {
   const containerRef = useRef(null) // コンポーネントのルートとなる要素を取得
   const { theme } = useTheme()
+  const [tweetLoaded, setTweetLoaded] = useState(false)
 
   useEffect(() => {
     // @ts-ignore
     if (scriptLoaded && window.twttr?.widgets) {
       // @ts-ignore
-      window.twttr.widgets.createTweet(id, containerRef.current, {
-        theme,
-        align: 'center',
-        lang: 'ja',
-      })
+      window.twttr.widgets
+        .createTweet(id, containerRef.current, {
+          theme,
+          align: 'center',
+          lang: 'ja',
+        })
+        .then(() => {
+          setTweetLoaded(true)
+        })
     }
-  }, [id, theme, scriptLoaded])
+  }, [id, theme, scriptLoaded, setTweetLoaded])
 
-  return <div ref={containerRef}></div>
+  return (
+    <div ref={containerRef}>
+      {(!scriptLoaded || !tweetLoaded) && (
+        <div className="flex justify-center">
+          <div className="bg-gray-200 animate-pulse rounded-lg h-64 max-w-lg w-full"></div>
+        </div>
+      )}
+    </div>
+  )
 }
 
 const PostPage: NextPage<StaticProps> = (props) => {
