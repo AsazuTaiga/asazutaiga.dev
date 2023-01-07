@@ -20,17 +20,17 @@ type StaticProps = {
 
 const EmbedTweet = ({
   id,
-  scriptReady,
+  scriptLoaded,
 }: {
   id: string
-  scriptReady: boolean
+  scriptLoaded: boolean
 }) => {
   const containerRef = useRef(null) // コンポーネントのルートとなる要素を取得
   const { theme } = useTheme()
 
   useEffect(() => {
     // @ts-ignore
-    if (scriptReady && window.twttr?.widgets) {
+    if (scriptLoaded && window.twttr?.widgets) {
       // @ts-ignore
       window.twttr.widgets.createTweet(id, containerRef.current, {
         theme,
@@ -38,7 +38,7 @@ const EmbedTweet = ({
         lang: 'ja',
       })
     }
-  }, [id, theme, scriptReady])
+  }, [id, theme, scriptLoaded])
 
   return <div ref={containerRef}></div>
 }
@@ -47,13 +47,13 @@ const PostPage: NextPage<StaticProps> = (props) => {
   const { theme } = useTheme()
   const { post, ogpUrl } = { ...props }
   const pageTitle = post.metadata.title + ' - asazutaiga.dev'
-  const [scriptReady, setScriptReady] = useState(false)
+  const [scriptLoaded, setScriptLoaded] = useState(false)
   return (
     <>
       <Script
         src="https://platform.twitter.com/widgets.js"
-        onReady={() => {
-          setScriptReady(true)
+        onLoad={() => {
+          setScriptLoaded(true)
         }}
       ></Script>
       <Head>
@@ -92,7 +92,7 @@ const PostPage: NextPage<StaticProps> = (props) => {
                 return (
                   <EmbedTweet
                     id={children.toString().replace(/\n$/, '')}
-                    scriptReady={scriptReady}
+                    scriptLoaded={scriptLoaded}
                   ></EmbedTweet>
                 )
               }
