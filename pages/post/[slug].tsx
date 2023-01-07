@@ -1,4 +1,5 @@
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next'
+import Script from 'next/script'
 import Head from 'next/head'
 import Markdown from 'react-markdown'
 import { CodeBlock } from '../../components/CodeBlock'
@@ -6,7 +7,7 @@ import { getPost, getSlugs } from '../../utils/post'
 import { generateOgpUrl } from '../../utils/ogp'
 import { Twemoji } from '../../components/Twemoji'
 import { useTheme } from '../../hooks/useTheme'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 type StaticPaths = {
   slug: string
@@ -17,13 +18,19 @@ type StaticProps = {
   ogpUrl: string
 }
 
-const EmbedTweet = ({ id }: { id: string }) => {
+const EmbedTweet = ({
+  id,
+  scriptReady,
+}: {
+  id: string
+  scriptReady: boolean
+}) => {
   const containerRef = useRef(null) // コンポーネントのルートとなる要素を取得
   const { theme } = useTheme()
 
   useEffect(() => {
     // @ts-ignore
-    if (window.twttr) {
+    if (scriptReady && window.twttr?.widgets) {
       // @ts-ignore
       window.twttr.widgets.createTweet(id, containerRef.current, {
         theme,
@@ -31,7 +38,7 @@ const EmbedTweet = ({ id }: { id: string }) => {
         lang: 'ja',
       })
     }
-  }, [id, theme])
+  }, [id, theme, scriptReady])
 
   return <div ref={containerRef}></div>
 }
@@ -40,8 +47,15 @@ const PostPage: NextPage<StaticProps> = (props) => {
   const { theme } = useTheme()
   const { post, ogpUrl } = { ...props }
   const pageTitle = post.metadata.title + ' - asazutaiga.dev'
+  const [scriptReady, setScriptReady] = useState(false)
   return (
     <>
+      <Script
+        src="https://platform.twitter.com/widgets.js"
+        onReady={() => {
+          setScriptReady(true)
+        }}
+      ></Script>
       <Head>
         <title>{pageTitle}</title>
         {!post.metadata.published && <meta name="robots" content="noindex" />}
@@ -78,6 +92,7 @@ const PostPage: NextPage<StaticProps> = (props) => {
                 return (
                   <EmbedTweet
                     id={children.toString().replace(/\n$/, '')}
+                    scriptReady={scriptReady}
                   ></EmbedTweet>
                 )
               }
