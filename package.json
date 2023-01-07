@@ -18,14 +18,13 @@
     "react-markdown": "^6.0.3",
     "react-syntax-highlighter": "^15.4.4",
     "remark-gfm": "^2.0.0",
-    "twemoji": "^13.1.0"
+    "twemoji": "^14.0.2"
   },
   "devDependencies": {
     "@types/gtag.js": "^0.0.7",
     "@types/node": "^18.7.5",
     "@types/react": "17.0.15",
     "@types/react-syntax-highlighter": "^13.5.2",
-    "@types/twemoji": "^12.1.2",
     "autoprefixer": "^10.3.1",
     "eslint": "^7.32.0",
     "eslint-config-next": "^11.0.1",

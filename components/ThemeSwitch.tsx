@@ -6,6 +6,7 @@ import { FiSun, FiMoon } from 'react-icons/fi'
 export const ThemeSwitch: React.VFC = () => {
   const { theme, setTheme } = useTheme()
   const checked = theme === 'dark'
+
   return (
     <Switch
       as="button"

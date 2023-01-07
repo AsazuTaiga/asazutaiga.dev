@@ -6,6 +6,7 @@ import { getPost, getSlugs } from '../../utils/post'
 import { generateOgpUrl } from '../../utils/ogp'
 import { Twemoji } from '../../components/Twemoji'
 import { useTheme } from '../../hooks/useTheme'
+import { useEffect, useRef } from 'react'
 
 type StaticPaths = {
   slug: string
@@ -14,6 +15,22 @@ type StaticPaths = {
 type StaticProps = {
   post: Post
   ogpUrl: string
+}
+
+const EmbedTweet = ({ id }: { id: string }) => {
+  const containerRef = useRef(null) // コンポーネントのルートとなる要素を取得
+  const { theme } = useTheme()
+
+  useEffect(() => {
+    // @ts-ignore
+    window.twttr.widgets.createTweet(id, containerRef.current, {
+      theme,
+      align: 'center',
+      lang: 'ja',
+    })
+  }, [id, theme])
+
+  return <div ref={containerRef}></div>
 }
 
 const PostPage: NextPage<StaticProps> = (props) => {
@@ -52,6 +69,16 @@ const PostPage: NextPage<StaticProps> = (props) => {
           components={{
             code({ inline, className, children }) {
               const match = /language-(\w+)/.exec(className || '')
+
+              // twitter
+              if (match && match[1] === 'twitter') {
+                return (
+                  <EmbedTweet
+                    id={children.toString().replace(/\n$/, '')}
+                  ></EmbedTweet>
+                )
+              }
+
               return !inline && match ? (
                 <CodeBlock
                   language={match[1]}
