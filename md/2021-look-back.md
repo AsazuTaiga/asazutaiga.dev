@@ -1,8 +1,8 @@
 ---
 emoji: '⛄'
-title: '2021年を振り返る①転職編'
+title: '2021年を振り返る'
 createdAt: '2021/12/09'
-updatedAt: '2021/12/09'
+updatedAt: '2023/01/06'
 published: true
 genre: 'hobby'
 tags: []
@@ -11,7 +11,7 @@ tags: []
 
 2021年は世間的にもいろいろありましたが、私自身にとっても身の回りに大きな変化のあった年でした。
 
-とりあえず雑に振り返っておこうと思います。（長くなりそうだったので①です） 
+とりあえず雑に振り返っておこうと思います。
 
 あ、全然関係ないのですが雪を降らせてみました。[react-snowfall](https://github.com/cahilfoley/react-snowfall)お手軽だしおしゃれだし神です
 
