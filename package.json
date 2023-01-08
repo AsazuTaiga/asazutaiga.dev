@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.4.0",
+    "@vercel/og": "^0.0.22",
     "dayjs": "^1.10.6",
     "markdown-yaml-metadata-parser": "^3.0.0",
     "next": "^12.0.7",
