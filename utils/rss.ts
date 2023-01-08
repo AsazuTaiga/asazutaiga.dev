@@ -31,9 +31,10 @@ export const generateRss = (posts: PostWithSlug[]): void => {
   posts.forEach((post) => {
     feed.addItem({
       title: post.metadata.title,
-      id: `${baseUrl}/posts/${post.slug}`,
-      link: `${baseUrl}/posts/${post.slug}`,
-      description: post.content.slice(0, 100) + '...',
+      id: `/posts/${post.slug}`,
+      link: `/posts/${post.slug}`,
+      description:
+        post.content.slice(0, 100).replaceAll(/(\r\n|\n|\r)/gm, '') + '...',
       date: new Date(post.metadata.createdAt),
       image: generateOgpUrl(post.metadata.title, post.metadata.emoji),
     })
