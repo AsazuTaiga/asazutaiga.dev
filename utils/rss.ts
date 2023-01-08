@@ -34,7 +34,10 @@ export const generateRss = (posts: PostWithSlug[]): void => {
       id: `${baseUrl}/post/${post.slug}`,
       link: `${baseUrl}/post/${post.slug}`,
       description:
-        post.content.slice(0, 100).replace(/(\r\n|\n|\r)/gm, '') + '...',
+        post.content
+          .slice(0, 100)
+          .replace(/(\r\n|\n|\r)/gm, '')
+          .replace(/\&/g, '&amp;') + '...',
       date: new Date(post.metadata.createdAt),
       image: generateOgpUrl(post.metadata.title, post.metadata.emoji),
     })
