@@ -27,7 +27,7 @@ export default function handler(req: NextRequest) {
           </div>
           <div tw="mt-4 text-2xl">2022年を振り返る</div>
           <div tw="text-md mt-2 font-extrabold text-purple-500">
-            asazutaiga.com
+            asazutaiga.dev
           </div>
         </div>
       ),
