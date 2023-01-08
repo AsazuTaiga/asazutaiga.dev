@@ -4,6 +4,7 @@ import React from 'react'
 import { Card } from '../components/Card'
 import { sortPostsByDate } from '../utils/date'
 import { getPostWithSlug, getSlugs } from '../utils/post'
+import { generateRss } from '../utils/rss'
 
 type StaticProps = {
   posts: PostWithSlug[]
@@ -38,6 +39,10 @@ export const getStaticProps: GetStaticProps<StaticProps> = async () => {
   const slugs = await getSlugs()
   const posts = await Promise.all(slugs.map((slug) => getPostWithSlug(slug)))
   const sortedPosts = sortPostsByDate(posts)
+
+  // 記事一覧を取得したタイミングで、RSSフィードも生成しておく
+  generateRss(sortedPosts)
+
   return {
     props: {
       posts: sortedPosts,
