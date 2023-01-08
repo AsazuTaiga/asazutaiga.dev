@@ -10,6 +10,7 @@ const TWITTER_MY_AVATAR_URL =
 const LINKTREE_URL = 'https://linktr.ee/asazutaiga'
 const TWITTER_URL = 'https://twitter.com/asazutaiga'
 const GITHUB_URL = 'https://github.com/asazutaiga'
+const RSS_URL = '/rss/feed.xml'
 
 export const Me: React.VFC = () => {
   const { theme } = useTheme()
@@ -33,7 +34,7 @@ export const Me: React.VFC = () => {
             href={GITHUB_URL}
             src={theme === 'light' ? github : githubDark}
           />
-          <CircleLink href="./rss/feed.xml" src="/rss.svg" />
+          <CircleLink href={RSS_URL} src="/rss.svg" />
         </div>
       </div>
     </div>
