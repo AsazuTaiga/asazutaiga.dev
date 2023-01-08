@@ -39,7 +39,10 @@ export const generateRss = (posts: PostWithSlug[]): void => {
           .replace(/(\r\n|\n|\r)/gm, '')
           .replace(/\&/g, '&amp;') + '...',
       date: new Date(post.metadata.createdAt),
-      image: generateOgpUrl(post.metadata.title, post.metadata.emoji),
+      image: generateOgpUrl(post.metadata.title, post.metadata.emoji).replace(
+        /\&/g,
+        '&amp;',
+      ),
     })
   })
 
