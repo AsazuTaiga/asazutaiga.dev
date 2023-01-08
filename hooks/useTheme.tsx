@@ -1,4 +1,10 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react'
 
 type Theme = 'light' | 'dark'
 type ThemeContextValue = {
@@ -16,14 +22,18 @@ type Props = {
 
 export const ThemeProvider: React.VFC<Props> = ({ children }) => {
   const [theme, _setTheme] = useState<Theme>('light')
+
+  const setTheme = useCallback(
+    (theme: Theme) => {
+      localStorage.setItem('theme', theme)
+      _setTheme(theme)
+    },
+    [_setTheme],
+  )
+
   useEffect(() => {
     setTheme(getLocalTheme() || getBrowserTheme())
-  }, [])
-
-  const setTheme = (theme: Theme) => {
-    localStorage.setItem('theme', theme)
-    _setTheme(theme)
-  }
+  }, [setTheme])
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>

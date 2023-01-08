@@ -2,7 +2,7 @@ import { NextPage, GetStaticProps } from 'next'
 import Head from 'next/head'
 import React from 'react'
 import { Card } from '../components/Card'
-import { sortPostsByDate } from '../utils/date'
+import { sortAndFilterPosts } from '../utils/sortAndFilter'
 import { getPostWithSlug, getSlugs } from '../utils/post'
 import { generateRss } from '../utils/rss'
 
@@ -19,16 +19,13 @@ const HomePage: NextPage<StaticProps> = (proprs) => {
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </Head>
       <div className="h-10 container" />
-      {proprs.posts.map(
-        (post) =>
-          post.metadata.published && (
-            <React.Fragment key={post.slug}>
-              <div className="h-3" />
-              <Card post={post} />
-              <div className="h-3" />
-            </React.Fragment>
-          ),
-      )}
+      {proprs.posts.map((post) => (
+        <React.Fragment key={post.slug}>
+          <div className="h-3" />
+          <Card post={post} />
+          <div className="h-3" />
+        </React.Fragment>
+      ))}
     </>
   )
 }
@@ -38,14 +35,14 @@ export default HomePage
 export const getStaticProps: GetStaticProps<StaticProps> = async () => {
   const slugs = await getSlugs()
   const posts = await Promise.all(slugs.map((slug) => getPostWithSlug(slug)))
-  const sortedPosts = sortPostsByDate(posts)
+  const sortedAndFiltered = sortAndFilterPosts(posts)
 
   // 記事一覧を取得したタイミングで、RSSフィードも生成しておく
-  generateRss(sortedPosts)
+  generateRss(sortedAndFiltered)
 
   return {
     props: {
-      posts: sortedPosts,
+      posts: sortedAndFiltered,
     },
   }
 }
