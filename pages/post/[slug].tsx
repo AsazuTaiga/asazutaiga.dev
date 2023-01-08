@@ -7,7 +7,7 @@ import { getPost, getSlugs } from '../../utils/post'
 import { generateOgpUrl } from '../../utils/ogp'
 import { Twemoji } from '../../components/Twemoji'
 import { useTheme } from '../../hooks/useTheme'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { EmbedTweet } from '../../components/EmbedTweet'
 
 type StaticPaths = {
@@ -24,6 +24,14 @@ const PostPage: NextPage<StaticProps> = (props) => {
   const { post, ogpUrl } = { ...props }
   const pageTitle = post.metadata.title + ' - asazutaiga.dev'
   const [scriptLoaded, setScriptLoaded] = useState(false)
+
+  useEffect(() => {
+    // @ts-ignore
+    if (window?.twttr) {
+      setScriptLoaded(true)
+    }
+  }, [setScriptLoaded])
+
   return (
     <>
       <Script
