@@ -1,4 +1,4 @@
-/* eslint-disable react/no-unknown-property */
+/* eslint-disable react/no-unknown-property */ // tw propが怒られるので無効化
 
 import { ImageResponse } from '@vercel/og'
 import { NextRequest } from 'next/server'
@@ -11,9 +11,8 @@ export default function handler(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url)
 
-    // ?title=<title>
     const hasTitle = searchParams.has('title')
-    const titel = hasTitle
+    const title = hasTitle
       ? searchParams.get('title')?.slice(0, 100)
       : 'blog post'
 
@@ -23,8 +22,13 @@ export default function handler(req: NextRequest) {
     return new ImageResponse(
       (
         <div tw="h-full w-full flex flex-col items-center justify-center bg-white">
-          <div tw="text-6xl">{emoji}</div>
-          <div tw="text-2xl mt-4">{titel}</div>
+          <div tw="p-7 rounded-full bg-purple-100 flex justify-center items-center">
+            <div tw="text-6xl">{emoji}</div>
+          </div>
+          <div tw="text-2xl mt-4">{title}</div>
+          <div tw="text-sm mt-2 font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
+            asazutaiga.com
+          </div>
         </div>
       ),
     )
