@@ -21,12 +21,12 @@ export default function handler(req: NextRequest) {
 
     return new ImageResponse(
       (
-        <div tw="h-full w-full flex flex-col items-center justify-center bg-white">
-          <div tw="p-7 rounded-full bg-purple-100 flex justify-center items-center">
-            <div tw="text-6xl">{emoji}</div>
+        <div tw="flex h-full w-full flex-col items-center justify-center border-8 border-purple-400 bg-white">
+          <div tw="flex h-32 w-32 items-center justify-center rounded-full bg-purple-100 p-7 text-6xl">
+            🎍
           </div>
-          <div tw="text-2xl mt-4">{title}</div>
-          <div tw="text-sm mt-2 font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
+          <div tw="mt-4 text-2xl">2022年を振り返る</div>
+          <div tw="text-md mt-2 font-extrabold text-purple-500">
             asazutaiga.com
           </div>
         </div>
