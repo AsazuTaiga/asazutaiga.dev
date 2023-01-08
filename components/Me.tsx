@@ -27,28 +27,23 @@ export const Me: React.VFC = () => {
         {/* eslint-disabled-next-line */}
         <div className="font-bold text-2xl">@AsazuTaiga</div>
         <div className="mt-2 flex flex-row gap-2">
-          <a href={LINKTREE_URL} target="_blank" rel="noreferrer">
-            <div className="w-8 h-8  rounded-full shadow-md flex justify-center items-center">
-              <Image src={linktree} alt="" width={20} height={20} />
-            </div>
-          </a>
-          <a href={TWITTER_URL} target="_blank" rel="noreferrer">
-            <div className="w-8 h-8  rounded-full shadow-md flex justify-center items-center">
-              <Image src={twitter} alt="" width={20} height={20} />
-            </div>
-          </a>
-          <a href={GITHUB_URL} target="_blank" rel="noreferrer">
-            <div className="w-8 h-8  rounded-full shadow-md flex justify-center items-center">
-              <Image
-                src={theme === 'light' ? github : githubDark}
-                alt=""
-                width={20}
-                height={20}
-              />
-            </div>
-          </a>
+          <CircleLink href={LINKTREE_URL} src={linktree} />
+          <CircleLink href={TWITTER_URL} src={twitter} />
+          <CircleLink
+            href={GITHUB_URL}
+            src={theme === 'light' ? github : githubDark}
+          />
+          <CircleLink href="./rss/feed.xml" src="/rss.svg" />
         </div>
       </div>
     </div>
   )
 }
+
+const CircleLink: React.VFC<{ href: string; src: any }> = ({ href, src }) => (
+  <a href={href} target="_blank" rel="noreferrer">
+    <div className="w-8 h-8  rounded-full shadow-md flex justify-center items-center">
+      <Image src={src} alt="" width={20} height={20} />
+    </div>
+  </a>
+)
