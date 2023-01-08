@@ -4,7 +4,7 @@ import { GA_TRACKING_ID } from '../utils/gtag'
 class MyDocument extends Document {
   render() {
     return (
-      <Html>
+      <Html lang="ja">
         <Head>
           {GA_TRACKING_ID && (
             <>

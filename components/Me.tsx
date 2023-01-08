@@ -28,21 +28,38 @@ export const Me: React.VFC = () => {
         {/* eslint-disabled-next-line */}
         <div className="font-bold text-2xl">@AsazuTaiga</div>
         <div className="mt-2 flex flex-row gap-2">
-          <CircleLink href={LINKTREE_URL} src={linktree} />
-          <CircleLink href={TWITTER_URL} src={twitter} />
+          <CircleLink
+            href={LINKTREE_URL}
+            src={linktree}
+            ariaLabel="Asazu TaigaのLinktree"
+          />
+          <CircleLink
+            href={TWITTER_URL}
+            src={twitter}
+            ariaLabel="Asazu TaigaのTwitter"
+          />
           <CircleLink
             href={GITHUB_URL}
             src={theme === 'light' ? github : githubDark}
+            ariaLabel="Asazu TaigaのGitHub"
           />
-          <CircleLink href={RSS_URL} src="/rss.svg" />
+          <CircleLink
+            href={RSS_URL}
+            src="/rss.svg"
+            ariaLabel="RSSフィードを購読する"
+          />
         </div>
       </div>
     </div>
   )
 }
 
-const CircleLink: React.VFC<{ href: string; src: any }> = ({ href, src }) => (
-  <a href={href} target="_blank" rel="noreferrer">
+const CircleLink: React.VFC<{ href: string; src: any; ariaLabel: string }> = ({
+  href,
+  src,
+  ariaLabel,
+}) => (
+  <a href={href} target="_blank" rel="noreferrer" aria-label={ariaLabel}>
     <div className="w-8 h-8  rounded-full shadow-md flex justify-center items-center">
       <Image src={src} alt="" width={20} height={20} />
     </div>
