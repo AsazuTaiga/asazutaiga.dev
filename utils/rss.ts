@@ -31,8 +31,8 @@ export const generateRss = (posts: PostWithSlug[]): void => {
   posts.forEach((post) => {
     feed.addItem({
       title: post.metadata.title,
-      id: `${baseUrl}/posts/${post.slug}`,
-      link: `${baseUrl}/posts/${post.slug}`,
+      id: `${baseUrl}/post/${post.slug}`,
+      link: `${baseUrl}/post/${post.slug}`,
       description:
         post.content.slice(0, 100).replace(/(\r\n|\n|\r)/gm, '') + '...',
       date: new Date(post.metadata.createdAt),
