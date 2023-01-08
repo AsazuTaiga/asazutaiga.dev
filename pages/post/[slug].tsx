@@ -122,7 +122,7 @@ export const getStaticProps: GetStaticProps<StaticProps, StaticPaths> = async (
   const ogpUrl =
     process.env.NODE_ENV === 'development'
       ? ''
-      : generateOgpUrl(post.metadata.title)
+      : generateOgpUrl(post.metadata.title, post.metadata.emoji)
   return {
     props: {
       post,
