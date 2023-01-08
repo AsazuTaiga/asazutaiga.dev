@@ -3,7 +3,7 @@ import fs from 'fs'
 import { generateOgpUrl } from './ogp'
 
 export const generateRss = (posts: PostWithSlug[]): void => {
-  const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL || 'https://asazutaiga.dev'
+  const baseUrl = 'https://asazutaiga.dev'
   const date = new Date()
 
   const author = {
@@ -31,8 +31,8 @@ export const generateRss = (posts: PostWithSlug[]): void => {
   posts.forEach((post) => {
     feed.addItem({
       title: post.metadata.title,
-      id: `/posts/${post.slug}`,
-      link: `/posts/${post.slug}`,
+      id: `${baseUrl}/posts/${post.slug}`,
+      link: `${baseUrl}/posts/${post.slug}`,
       description:
         post.content.slice(0, 100).replaceAll(/(\r\n|\n|\r)/gm, '') + '...',
       date: new Date(post.metadata.createdAt),
