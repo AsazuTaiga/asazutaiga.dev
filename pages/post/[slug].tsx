@@ -1,6 +1,7 @@
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next'
 import Script from 'next/script'
 import Head from 'next/head'
+import Router from 'next/router'
 import Markdown from 'react-markdown'
 import { CodeBlock } from '../../components/CodeBlock'
 import { getPost, getSlugs } from '../../utils/post'
@@ -9,6 +10,7 @@ import { Twemoji } from '../../components/Twemoji'
 import { useTheme } from '../../hooks/useTheme'
 import { useEffect, useState } from 'react'
 import { EmbedTweet } from '../../components/EmbedTweet'
+import NotFoundPage from '../404'
 
 type StaticPaths = {
   slug: string
@@ -31,6 +33,10 @@ const PostPage: NextPage<StaticProps> = (props) => {
       setScriptLoaded(true)
     }
   }, [setScriptLoaded])
+
+  if (!post.metadata.published) {
+    return <NotFoundPage />
+  }
 
   return (
     <>
@@ -128,6 +134,7 @@ export const getStaticProps: GetStaticProps<StaticProps, StaticPaths> = async (
       post,
       ogpUrl,
     },
+    notFound: !post.metadata.published,
   }
 }
 
