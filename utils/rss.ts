@@ -19,7 +19,7 @@ export const generateRss = (posts: PostWithSlug[]): void => {
     copyright: `© ${date.getFullYear()} ${author.name}`,
     link: baseUrl,
     language: 'ja',
-    image: `${baseUrl}/favicon.svg`,
+    image: `https://pbs.twimg.com/profile_images/1606963603336482817/S498lmc__400x400.jpg`,
     updated: date,
     feedLinks: {
       rss2: `${baseUrl}/rss/feed.xml`,

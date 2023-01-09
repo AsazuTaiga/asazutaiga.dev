@@ -48,7 +48,11 @@ const PostPage: NextPage<StaticProps> = (props) => {
       <Head>
         <title>{pageTitle}</title>
         {!post.metadata.published && <meta name="robots" content="noindex" />}
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link
+          rel="icon"
+          href="https://pbs.twimg.com/profile_images/1606963603336482817/S498lmc__400x400.jpg"
+          type="image/jpeg"
+        />
         <meta property="og:site_name" content={pageTitle} />
         <meta property="og:image" content={ogpUrl} />
         <meta name="twitter:card" content="summary_large_image" />
