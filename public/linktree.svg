@@ -1,1 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="48px" height="48px"><path fill="#1de9b6" d="M18.89,32H21v8c0,1.1-0.9,2-2,2h-4c-1.1,0-2-0.9-2-2v-8H4.89c-1.52,0-2.48-1.64-1.75-2.97 L15.25,7.16c0.76-1.37,2.74-1.37,3.5,0l4.85,9.74l-6.46,12.13C16.41,30.36,17.37,32,18.89,32z"/><path fill="#26a69a" d="M43.11,32H35v8c0,1.1-0.9,2-2,2h-4c-1.1,0-2-0.9-2-2v-8h2.11c1.52,0,2.48-1.64,1.75-2.97L24.3,16.9 l4.95-9.74c0.76-1.37,2.74-1.37,3.5,0l12.11,21.87C45.59,30.36,44.63,32,43.11,32z"/></svg>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 26.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.0"
+	 id="svg5" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:svg="http://www.w3.org/2000/svg"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 711.6 500.3"
+	 style="enable-background:new 0 0 711.6 500.3;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill-rule:evenodd;clip-rule:evenodd;fill:#43E660;}
+</style>
+<g id="layer1" transform="translate(-34.813623,-47.365765)" inkscape:groupmode="layer" inkscape:label="Layer 1">
+	<g id="g46" transform="matrix(0.26458333,0,0,0.26458333,-15.67531,43.64805)">
+		<g id="g18" transform="matrix(0.857143,0,0,0.857143,8,306)">
+			<path id="path993" class="st0" d="M1666.4,1043.3h236.4v531.3h-236.4V1043.3"/>
+			<path id="path991" class="st0" d="M1119.8,499.4h401.7l-286-270.7l157.6-160.6l272.1,278.3V-49.6h236.4v395.9l272-278.3
+				l157.6,160.6l-286,270.7H2447v223.9h-404.3l287.3,278.3l-157.6,156.9l-390.3-390.9l-390.3,390.9l-157.6-156.9l287.3-278.3h-404.2
+				V499.4H1119.8"/>
+		</g>
+	</g>
+</g>
+</svg>
