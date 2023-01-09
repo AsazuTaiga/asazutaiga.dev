@@ -1,7 +1,6 @@
 import { NextPage, GetStaticProps, GetStaticPaths } from 'next'
 import Script from 'next/script'
 import Head from 'next/head'
-import Router from 'next/router'
 import Markdown from 'react-markdown'
 import { CodeBlock } from '../../components/CodeBlock'
 import { getPost, getSlugs } from '../../utils/post'
