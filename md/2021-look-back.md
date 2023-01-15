@@ -4,7 +4,7 @@ title: '2021年を振り返る'
 createdAt: '2021/12/09'
 updatedAt: '2023/01/06'
 published: true
-genre: 'hobby'
+genre: 'life'
 tags: []
 ---
 

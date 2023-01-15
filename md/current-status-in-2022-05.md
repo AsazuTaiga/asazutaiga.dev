@@ -4,7 +4,7 @@ title: '2022年5月現在のAsazuTaigaの仕事や感情'
 createdAt: '2022/05/06'
 updatedAt: '2021/05/06'
 published: true
-genre: 'hobby'
+genre: 'life'
 tags: []
 ---
 長らくブログをさぼってしまったので、まとめっぽい記事を出すなどしてお茶を濁します。

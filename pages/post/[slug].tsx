@@ -10,6 +10,7 @@ import { useTheme } from '../../hooks/useTheme'
 import { useEffect, useState } from 'react'
 import { EmbedTweet } from '../../components/EmbedTweet'
 import NotFoundPage from '../404'
+import { Tag } from '../../components/Tag'
 
 type StaticPaths = {
   slug: string
@@ -74,6 +75,13 @@ const PostPage: NextPage<StaticProps> = (props) => {
         {post.metadata.title}
       </h1>
       <div className="mt-4 text-sm font-bold">{post.metadata.createdAt}</div>
+      {post.metadata.tags.length > 0 && (
+        <div className="mt-4 flex gap-2">
+          {post.metadata.tags.map((tag, i) => (
+            <Tag key={i}>{tag}</Tag>
+          ))}
+        </div>
+      )}
       <div className="markdown mt-10">
         <Markdown
           components={{

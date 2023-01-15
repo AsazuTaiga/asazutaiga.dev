@@ -5,12 +5,14 @@ import { Card } from '../components/Card'
 import { sortAndFilterPosts } from '../utils/sortAndFilter'
 import { getPostWithSlug, getSlugs } from '../utils/post'
 import { generateRss } from '../utils/rss'
+import { useTab } from '../components/Tab'
 
 type StaticProps = {
   posts: PostWithSlug[]
 }
 
 const HomePage: NextPage<StaticProps> = (proprs) => {
+  const { selected, onClick, tab } = useTab()
   return (
     <>
       <Head>
@@ -22,14 +24,17 @@ const HomePage: NextPage<StaticProps> = (proprs) => {
           type="image/jpeg"
         />
       </Head>
-      <div className="h-10 container" />
-      {proprs.posts.map((post) => (
-        <React.Fragment key={post.slug}>
-          <div className="h-3" />
-          <Card post={post} />
-          <div className="h-3" />
-        </React.Fragment>
-      ))}
+      <div className="mt-10 flex flex-col gap-4">
+        {tab}
+        <div className="flex flex-col gap-8">
+          {proprs.posts.map(
+            (post) =>
+              (selected === 'all' || post.metadata.genre === selected) && (
+                <Card post={post} key={post.slug} />
+              ),
+          )}
+        </div>
+      </div>
     </>
   )
 }

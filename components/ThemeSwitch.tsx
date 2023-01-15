@@ -24,7 +24,7 @@ export const ThemeSwitch: React.VFC = () => {
       }}
       className={`${
         checked ? 'bg-purple-300' : 'bg-gray-600'
-      } h-6 rounded-full w-11 fixed top-5 right-5 transition-color duration-200 z-10 shadow-md`}
+      } h-6 rounded-full w-11 fixed top-5 right-5 transition-color duration-200 z-10 shadow-md focus:ring-4 outline-none  `}
     >
       {({ checked }) => (
         <div

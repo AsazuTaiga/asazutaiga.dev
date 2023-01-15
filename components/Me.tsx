@@ -59,9 +59,13 @@ const CircleLink: React.VFC<{ href: string; src: any; ariaLabel: string }> = ({
   src,
   ariaLabel,
 }) => (
-  <a href={href} target="_blank" rel="noreferrer" aria-label={ariaLabel}>
-    <div className="w-8 h-8  rounded-full shadow-md flex justify-center items-center">
-      <Image src={src} alt="" width={20} height={20} />
-    </div>
+  <a
+    href={href}
+    target="_blank"
+    rel="noreferrer"
+    aria-label={ariaLabel}
+    className="w-8 h-8  rounded-full shadow-md flex justify-center items-center focus:ring-4 outline-none "
+  >
+    <Image src={src} alt="" width={20} height={20} />
   </a>
 )
