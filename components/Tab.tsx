@@ -1,6 +1,7 @@
 import { Tab } from '@headlessui/react'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useMemo } from 'react'
 import { useTheme } from '../hooks/useTheme'
+import { useRouter } from 'next/router'
 
 type TabState = 'all' | 'tech' | 'life'
 const StateToIndex: Record<TabState, number> = {
@@ -57,7 +58,7 @@ const MyTab = ({
         selected ? 'font-bold' : ''
       }
       ${selected && theme === 'light' ? 'bg-white' : ''}
-      ${selected && theme === 'dark' ? 'bg-indigo-900' : ''}
+      ${selected && theme === 'dark' ? 'bg-purple-400' : ''}
     `}
     >
       {children}
@@ -66,11 +67,22 @@ const MyTab = ({
 }
 
 export const useTab = () => {
-  const [selected, setSelected] = useState<TabState>('all')
+  const router = useRouter()
+  const selected =
+    typeof router.query.selected === 'string'
+      ? (router.query.selected as TabState)
+      : 'all'
 
-  const onClick = useCallback((state: TabState) => {
-    setSelected(state)
-  }, [])
+  const onClick = useCallback(
+    (state: TabState) => {
+      router.replace({
+        query: {
+          selected: state,
+        },
+      })
+    },
+    [router],
+  )
 
   const tab = useMemo(
     () => <MyTabs selected={selected} onChange={onClick} />,
