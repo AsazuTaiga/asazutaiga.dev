@@ -26,7 +26,7 @@ const HomePage: NextPage<StaticProps> = (proprs) => {
       </Head>
       <div className="mt-10 flex flex-col gap-4">
         {tab}
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-4 mt-4">
           {proprs.posts.map(
             (post) =>
               (selected === 'all' || post.metadata.genre === selected) && (
