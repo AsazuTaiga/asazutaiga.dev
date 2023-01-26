@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react'
 import { EmbedTweet } from '../../components/EmbedTweet'
 import NotFoundPage from '../404'
 import { Tag } from '../../components/Tag'
+import { FiInfo } from 'react-icons/fi'
 
 type StaticPaths = {
   slug: string
@@ -82,6 +83,17 @@ const PostPage: NextPage<StaticProps> = (props) => {
           ))}
         </div>
       )}
+      <div
+        className={`flex text-sm items-center gap-2 mt-10 p-2 border-l-4 shadow-md ${
+          theme === 'light'
+            ? 'bg-purple-100 text-purple-800 border-purple-800'
+            : 'bg-indigo-900 text-indigo-100 border-indigo-200'
+        }`}
+      >
+        <FiInfo />
+        この記事は{Math.ceil(post.content.length / 600)}分で読めます
+      </div>
+
       <div className="markdown mt-10">
         <Markdown
           components={{

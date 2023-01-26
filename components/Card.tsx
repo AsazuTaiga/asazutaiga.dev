@@ -27,10 +27,8 @@ export const Card: React.VFC<Props> = ({ post }) => {
               className={`${emojiBgColor} p-2 rounded-md flex-shrink-0`}
             />
             <div className="flex-col ml-3">
-              <div className="text-md">{post.metadata.title}</div>
-              <div className="mt-2 text-sm opacity-50">
-                {post.metadata.createdAt}
-              </div>
+              <div className="text-lg font-bold">{post.metadata.title}</div>
+              <div className="mt-2 text-sm">{post.metadata.createdAt}</div>
               <div className="mt-2 text-xs flex gap-2">
                 {post.metadata.tags.map((tag, i) => (
                   <Tag key={i}>{tag}</Tag>
