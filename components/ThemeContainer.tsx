@@ -7,7 +7,6 @@ type Props = {
 
 export const ThemeContainer: React.VFC<Props> = ({ children }) => {
   const { theme } = useTheme()
-  const textColor = theme === 'light' ? 'text-gray-900' : 'text-gray-100'
 
   useEffect(() => {
     const addClass = theme === 'light' ? 'bg-gray-50' : 'bg-gray-900'
@@ -18,6 +17,10 @@ export const ThemeContainer: React.VFC<Props> = ({ children }) => {
   }, [theme])
 
   return (
-    <main className={`${theme} ${textColor} min-h-screen`}>{children}</main>
+    <main className={`${theme}`}>
+      <div className="text-gray-900 dark:text-gray-100 min-h-screen">
+        {children}
+      </div>
+    </main>
   )
 }

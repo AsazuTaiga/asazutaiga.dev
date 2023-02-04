@@ -1,15 +1,12 @@
 import Link from 'next/link'
-import { useTheme } from '../hooks/useTheme'
 import { ThemeSwitch } from './ThemeSwitch'
 
 export const AppBar = () => {
-  const { theme } = useTheme()
-
   return (
     <header
       className={`flex justify-between items-center h-16 fixed w-full z-10 
       backdrop-blur-xl shadow-md
-      ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'}
+      bg-white dark:bg-gray-900
       `}
     >
       <Link passHref href="/">

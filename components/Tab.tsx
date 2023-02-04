@@ -1,6 +1,5 @@
 import { Tab } from '@headlessui/react'
 import { useCallback, useMemo } from 'react'
-import { useTheme } from '../hooks/useTheme'
 import { useRouter } from 'next/router'
 
 type TabState = 'all' | 'tech' | 'life'
@@ -27,13 +26,12 @@ const MyTabs = ({ selected, onChange }: Props) => {
     },
     [onChange],
   )
-  const { theme } = useTheme()
   return (
     <Tab.Group selectedIndex={StateToIndex[selected]} onChange={handleChange}>
       <Tab.List
         className={`flex p-1 rounded-md justify-between gap-2
-          ${theme === 'light' ? 'bg-purple-100' : 'bg-gray-800'}
-        ${theme === 'light' ? 'text-gray-900' : 'text-white'}
+        bg-purple-100 dark:bg-gray-800
+        text-gray-900 dark:text-white
         `}
       >
         <MyTab selected={selected === 'all'}>All</MyTab>
@@ -51,14 +49,11 @@ const MyTab = ({
   selected: boolean
   children: string
 }) => {
-  const { theme } = useTheme()
   return (
     <Tab
       className={`text-xl rounded-md p-1 flex-1 bg-transparent focus:ring-4 outline-none ${
-        selected ? 'font-bold' : ''
+        selected ? 'font-bold bg-white dark:bg-purple-400' : ''
       }
-      ${selected && theme === 'light' ? 'bg-white' : ''}
-      ${selected && theme === 'dark' ? 'bg-purple-400' : ''}
     `}
     >
       {children}

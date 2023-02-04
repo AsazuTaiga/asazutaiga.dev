@@ -6,7 +6,6 @@ import { CodeBlock } from '../../components/CodeBlock'
 import { getPost, getSlugs } from '../../utils/post'
 import { generateOgpUrl } from '../../utils/ogp'
 import { Twemoji } from '../../components/Twemoji'
-import { useTheme } from '../../hooks/useTheme'
 import { useEffect, useState } from 'react'
 import { EmbedTweet } from '../../components/EmbedTweet'
 import NotFoundPage from '../404'
@@ -23,7 +22,6 @@ type StaticProps = {
 }
 
 const PostPage: NextPage<StaticProps> = (props) => {
-  const { theme } = useTheme()
   const { post, ogpUrl } = { ...props }
   const pageTitle = post.metadata.title + ' - asazutaiga.dev'
   const [scriptLoaded, setScriptLoaded] = useState(false)
@@ -67,9 +65,7 @@ const PostPage: NextPage<StaticProps> = (props) => {
         <Twemoji
           emoji={post.metadata.emoji}
           size={120}
-          className={`p-7 rounded-full ${
-            theme === 'light' ? 'bg-purple-100' : 'bg-purple-300'
-          }`}
+          className={`p-7 rounded-full bg-purple-100 dark:bg-purple-300`}
         />
       </div>
       <h1 className="text-3xl font-bold mt-10 leading-tight">
@@ -84,11 +80,7 @@ const PostPage: NextPage<StaticProps> = (props) => {
         </div>
       )}
       <div
-        className={`flex text-sm items-center gap-2 mt-10 p-2 border-l-4 shadow-md ${
-          theme === 'light'
-            ? 'bg-purple-100 text-purple-800 border-purple-800'
-            : 'bg-indigo-900 text-indigo-100 border-indigo-200'
-        }`}
+        className={`flex text-sm items-center gap-2 mt-10 p-2 border-l-4 shadow-md bg-purple-100 text-purple-800 border-purple-800 dark:bg-indigo-900 dark:text-indigo-100 dark:border-indigo-200`}
       >
         <FiInfo />
         この記事は{Math.ceil(post.content.length / 600)}分で読めます

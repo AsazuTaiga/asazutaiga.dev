@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import { useTheme } from '../hooks/useTheme'
 import { Tag } from './Tag'
 import { Twemoji } from './Twemoji'
 
@@ -9,22 +8,17 @@ type Props = {
 
 export const Card: React.VFC<Props> = ({ post }) => {
   const href = `/post/${post.slug}`
-  const { theme } = useTheme()
-  const bgColor = theme === 'light' ? 'bg-white' : 'bg-gray-700'
-  const emojiBgColor = theme === 'light' ? 'bg-purple-100' : 'bg-purple-300'
-  const hoverColor =
-    theme === 'light' ? 'hover:bg-purple-200' : 'hover:bg-gray-600'
   return (
     <section className="cursor-pointer">
       <Link href={href} passHref>
         <a
-          className={`focus:ring-4 outline-none ${bgColor} ${hoverColor} rounded-lg p-4 shadow-lg block`}
+          className={`focus:ring-4 outline-none bg-white dark:bg-gray-700 hover:bg-purple-200 dark:hover:bg-gray-600 rounded-lg p-4 shadow-lg block`}
         >
           <div className="flex items-center">
             <Twemoji
               emoji={post.metadata.emoji}
               size={60}
-              className={`${emojiBgColor} p-2 rounded-md flex-shrink-0`}
+              className={`bg-purple-100 dark:bg-purple-300 p-2 rounded-md flex-shrink-0`}
             />
             <div className="flex-col ml-3">
               <div className="text-lg font-bold">{post.metadata.title}</div>

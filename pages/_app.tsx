@@ -2,7 +2,6 @@ import 'tailwindcss/tailwind.css'
 import '../css/global.css'
 import type { AppProps } from 'next/app'
 import { ThemeProvider } from '../hooks/useTheme'
-import { ThemeSwitch } from '../components/ThemeSwitch'
 import { LayoutContainer } from '../components/LayoutContainer'
 import { ThemeContainer } from '../components/ThemeContainer'
 import { Copy } from '../components/Copy'
@@ -28,10 +27,8 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <ThemeProvider>
-      {/* <ThemeSwitch /> */}
       <ThemeContainer>
         <AppBar />
-
         <LayoutContainer>
           <Component {...pageProps} />
           <div className="h-10" />

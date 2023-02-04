@@ -28,15 +28,13 @@ export const EmbedTweet = ({
     }
   }, [id, theme, scriptLoaded, setTweetLoaded])
 
-  const themeColor = theme === 'light' ? 'bg-gray-100' : 'bg-gray-800'
-
   return (
     <div ref={containerRef}>
       {(!scriptLoaded || !tweetLoaded) && (
         <div className="flex justify-center">
           <div
             className={
-              themeColor +
+              'bg-gray-100 dark:bg-gray-800' +
               ' bg-gray-200 animate-pulse rounded-lg h-64 max-w-lg w-full'
             }
           ></div>
