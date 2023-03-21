@@ -89,6 +89,7 @@ const PostPage: NextPage<StaticProps> = (props) => {
 
       <div className="markdown mt-10">
         <Markdown
+          // @ts-ignore
           rehypePlugins={[rehypeRaw]}
           components={{
             code({ inline, className, children }) {
