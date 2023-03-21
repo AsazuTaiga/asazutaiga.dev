@@ -11,6 +11,7 @@ import { EmbedTweet } from '../../components/EmbedTweet'
 import NotFoundPage from '../404'
 import { Tag } from '../../components/Tag'
 import { FiInfo } from 'react-icons/fi'
+import rehypeRaw from 'rehype-raw'
 
 type StaticPaths = {
   slug: string
@@ -88,6 +89,7 @@ const PostPage: NextPage<StaticProps> = (props) => {
 
       <div className="markdown mt-10">
         <Markdown
+          rehypePlugins={[rehypeRaw]}
           components={{
             code({ inline, className, children }) {
               const match = /language-(\w+)/.exec(className || '')

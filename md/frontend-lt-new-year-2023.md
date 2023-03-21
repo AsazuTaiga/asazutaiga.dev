@@ -1,8 +1,8 @@
 ---
 emoji: '🎤'
-title: '【登壇告知】フロントエンドLT新年会 - 20代の現役エンジニア5人が語る'
+title: '【登壇告知+資料】フロントエンドLT新年会 - 20代の現役エンジニア5人が語る'
 createdAt: '2023/01/15'
-updatedAt: '2023/01/15'
+updatedAt: '2023/03/22'
 published: true
 genre: 'life'
 tags: ['登壇']
@@ -42,3 +42,11 @@ Asazuは「副業やってみた」というそのまんまのタイトルで登
 （フロントあんまり関係ないがいいのか？　いいか。） 
 
 こんなにたくさんの人の前で話すのは初めてなので緊張しますが、LTだしあんまり気負わずやります。わいわい。
+
+---
+
+【追記】
+
+せっかくなので資料を貼っておきます！
+
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/f5ce7850378d4b86932839e71af34687" title="副業やってみた" allowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 100%; height: auto; aspect-ratio: 560 / 315;" data-ratio="1.7777777777777777"></iframe>
