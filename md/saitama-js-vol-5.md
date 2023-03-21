@@ -5,7 +5,7 @@ createdAt: "2023/03/22"
 updatedAt: "2023/03/22"
 published: true
 genre: "tech"
-tags: ["blog"]
+tags: ["登壇", "Jotai"]
 ---
 
 埼玉県は大宮にて開催されました、[Saitama.js vol.5](https://saitamajs.connpass.com/event/272660/)で登壇してきました。
