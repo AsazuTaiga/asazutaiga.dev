@@ -14,7 +14,7 @@ Saitama.jsは、はぜさん（[@haze_it_ac](https://twitter.com/haze_it_ac)）�
 
 私は、「**【React】Jotaiで作ったフォームをApollo Clientで投げてみたら良さそうだった件**」というタイトルで発表しました。いわゆるやってみた系です（？）。  
 
-<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/37b2aa2c2bf94e908db2aff67abdb5c4" title="Jotaiで作ったフォームをApollo_Clientで投げたらいい感じだった件.pdf" allowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 100%; height: auto; aspect-ratio: 560 / 315;" data-ratio="1.7777777777777777"></iframe>
+<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/37b2aa2c2bf94e908db2aff67abdb5c4" title="Jotaiで作ったフォームをApollo_Clientで投げたらいい感じだった件.pdf" allowfullscreen style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 100%; height: auto; aspect-ratio: 560 / 315;" data-ratio="1.7777777777777777"></iframe>
 
 （サブリミナル春日部つむぎ。埼玉県民の基礎教養だと思ってたら、そう思っているのはインターネットのオタクだけだったてなワケ。布教完了です。）
 
