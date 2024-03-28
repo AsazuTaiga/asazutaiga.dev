@@ -14,10 +14,10 @@
     "dayjs": "^1.10.6",
     "feed": "^4.2.2",
     "markdown-yaml-metadata-parser": "^3.0.0",
-    "next": "^12.0.7",
+    "next": "^14.1.4",
     "next-sitemap": "^3.1.44",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-icons": "^4.3.1",
     "react-markdown": "^6.0.3",
     "react-syntax-highlighter": "^15.4.4",
@@ -36,6 +36,6 @@
     "next-remote-watch": "^1.0.0",
     "postcss": "^8.3.6",
     "tailwindcss": "^2.2.7",
-    "typescript": "4.3.5"
+    "typescript": "^5.4.3"
   }
 }
