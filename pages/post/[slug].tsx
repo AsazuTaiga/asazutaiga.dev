@@ -141,7 +141,7 @@ export const getStaticProps: GetStaticProps<StaticProps, StaticPaths> = async (
   context,
 ) => {
   const slug = context.params?.slug!
-  const post = await getPost(slug)
+  const post = getPost(slug)
   // devだとアクセスのたびに毎回走ってしまうので抑制する
   const ogpUrl =
     process.env.NODE_ENV === 'development'

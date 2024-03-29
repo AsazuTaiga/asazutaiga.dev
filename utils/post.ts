@@ -9,9 +9,9 @@ export const getSlugs = async () => {
   return slugs
 }
 
-export const getPost = async (slug: string) => {
+export const getPost = (slug: string) => {
   const filePath = `${process.cwd()}/md/${slug}.md`
-  const rawPost = await fs.promises.readFile(filePath, 'utf-8')
+  const rawPost = fs.readFileSync(filePath, 'utf-8')
   const post = metadataParser<Post>(rawPost)
   return post
 }
