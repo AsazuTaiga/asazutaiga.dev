@@ -2,7 +2,7 @@
 emoji: "🦈"
 title: "Next.jsで任意のファイル保存時にホットリロード"
 createdAt: "2021/08/07"
-updatedAt: "2024/04/01
+updatedAt: "2024/04/01"
 published: true
 genre: "tech"
 tags: ["Next.js"]
