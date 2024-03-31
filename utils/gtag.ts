@@ -1,6 +1,7 @@
 export const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_ID || ''
 
 export const sendPageViewEvent = (url: string): void => {
+  if (process.env.NODE_ENV !== 'production') return
   if (!GA_TRACKING_ID) return
   if (!window.gtag) return
 
@@ -10,6 +11,7 @@ export const sendPageViewEvent = (url: string): void => {
 }
 
 export const sendSwitchThemeEvent = (toTheme: 'dark' | 'light') => {
+  if (process.env.NODE_ENV !== 'production') return
   if (!GA_TRACKING_ID) return
   if (!window.gtag) return
 

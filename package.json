@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev:next": "next dev",
+    "dev:watch": "node watcher.js",
+    "dev": "npm-run-all2 -p dev:*",
     "build": "next build",
     "postbuild": "next-sitemap",
     "start": "next start"
@@ -34,6 +36,7 @@
     "chokidar": "^3.6.0",
     "eslint": "^8.57.0",
     "eslint-config-next": "^14.1.4",
+    "npm-run-all2": "^6.1.2",
     "postcss": "^8.3.6",
     "tailwindcss": "^2.2.7",
     "typescript": "^5.4.3",

@@ -2,10 +2,18 @@
 emoji: "🦈"
 title: "Next.jsで任意のファイル保存時にホットリロード"
 createdAt: "2021/08/07"
-updatedAt: "2021/08/07"
+updatedAt: "2024/04/01
 published: true
 genre: "tech"
 tags: ["Next.js"]
+---
+
+# 追記（2024/04/01）
+
+このブログのホットリロード方法を、`next-remote-watch` から、自前の（といっても[Dan先生が使っているもの](https://github.com/gaearon/overreacted.io/pull/797)をほぼパクった）スクリプトでwebsocketを使ってやる方法に置き換えてます。
+
+以下の記事はアーカイブとして残しますが、同様の方法を推奨するものではありません。
+
 ---
 
 ローカルのmarkdownファイルをSSGする形でブログを書いていると、こんなことを思いました。「mdファイルを更新したら画面がリロードされてほしいな～」と。書くのが楽になることは、ブログを続ける秘訣かもですし。

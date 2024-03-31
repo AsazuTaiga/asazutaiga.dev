@@ -6,6 +6,7 @@ const watchCallbacks = []
 
 const watcher = chokidar.watch('./md')
 watcher.on('change', () => {
+  console.log('File changed')
   watchCallbacks.forEach((cb) => cb())
 })
 
