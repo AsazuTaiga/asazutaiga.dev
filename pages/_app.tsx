@@ -10,6 +10,7 @@ import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { sendPageViewEvent } from '../utils/gtag'
 import { AppBar } from '../components/AppBar'
+import { AutoRefresh } from '../components/AutoRefresh'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter()
@@ -30,10 +31,12 @@ function MyApp({ Component, pageProps }: AppProps) {
       <ThemeContainer>
         <AppBar />
         <LayoutContainer>
-          <Component {...pageProps} />
-          <div className="h-10" />
-          <Me />
-          <Copy />
+          <AutoRefresh>
+            <Component {...pageProps} />
+            <div className="h-10" />
+            <Me />
+            <Copy />
+          </AutoRefresh>
         </LayoutContainer>
       </ThemeContainer>
     </ThemeProvider>
