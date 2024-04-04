@@ -12,7 +12,10 @@ export const AppBar = () => {
       <Link
         passHref
         href="/"
-        className={`ml-4 font-extrabold text-transparent text-4xl bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 focus:ring-4 outline-none`}
+        className={`ml-4 font-semibold
+        text-2xl
+        text-gray-900
+        dark:text-white`}
       >
         asazutaiga.dev
       </Link>

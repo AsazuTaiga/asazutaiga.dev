@@ -6,13 +6,14 @@ import { sortAndFilterPosts } from '../utils/sortAndFilter'
 import { getPostWithSlug, getSlugs } from '../utils/post'
 import { generateRss } from '../utils/rss'
 import { useTab } from '../components/Tab'
+import { Transition } from '@headlessui/react'
 
 type StaticProps = {
   posts: PostWithSlug[]
 }
 
 const HomePage: NextPage<StaticProps> = (proprs) => {
-  const { selected, onClick, tab } = useTab()
+  const { selected, tab } = useTab()
   return (
     <>
       <Head>
@@ -26,14 +27,46 @@ const HomePage: NextPage<StaticProps> = (proprs) => {
       </Head>
       <div className="mt-10 flex flex-col gap-4">
         {tab}
-        <div className="flex flex-col gap-4">
-          {proprs.posts.map(
-            (post) =>
-              (selected === 'all' || post.metadata.genre === selected) && (
+        <Transition
+          show={selected === 'all'}
+          enterFrom="mt-4 opacity-50"
+          enterTo="mt-0 opacity-100"
+          enter="transition-all duration-300"
+        >
+          <div className="flex flex-col gap-4">
+            {proprs.posts.map((post) => (
+              <Card post={post} key={post.slug} />
+            ))}
+          </div>
+        </Transition>
+        <Transition
+          show={selected === 'tech'}
+          enterFrom="mt-4 opacity-50"
+          enterTo="mt-0 opacity-100"
+          enter="transition-all duration-300"
+        >
+          <div className="flex flex-col gap-4">
+            {proprs.posts
+              .filter((post) => post.metadata.genre === 'tech')
+              .map((post) => (
                 <Card post={post} key={post.slug} />
-              ),
-          )}
-        </div>
+              ))}
+          </div>
+        </Transition>
+        <Transition
+          show={selected === 'life'}
+          enterFrom="mt-4 opacity-50"
+          enterTo="mt-0 opacity-100"
+          enter="transition-all duration-300"
+        >
+          <div className="flex flex-col gap-4">
+            {proprs.posts
+              .filter((post) => post.metadata.genre === 'life')
+              .map((post) => (
+                <Card post={post} key={post.slug} />
+              ))}
+          </div>
+        </Transition>
       </div>
     </>
   )
