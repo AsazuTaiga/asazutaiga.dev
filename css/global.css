@@ -78,5 +78,5 @@
 }
 
 *:not(code *, code) {
-  font-family: 'system-ui,Hiragino Sans,YuGothic,Arial,sans-serif', sans-serif;
+  font-family: 'Inter,sans-serif', sans-serif;
 }

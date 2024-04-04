@@ -11,6 +11,9 @@ import { useEffect } from 'react'
 import { sendPageViewEvent } from '../utils/gtag'
 import { AppBar } from '../components/AppBar'
 import { AutoRefresh } from '../components/AutoRefresh'
+import { Inter } from 'next/font/google'
+
+const inter = Inter({ subsets: ['latin'] })
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter()
@@ -27,19 +30,21 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [router.events])
 
   return (
-    <ThemeProvider>
-      <ThemeContainer>
-        <AppBar />
-        <LayoutContainer>
-          <AutoRefresh>
-            <Component {...pageProps} />
-            <div className="h-10" />
-            <Me />
-            <Copy />
-          </AutoRefresh>
-        </LayoutContainer>
-      </ThemeContainer>
-    </ThemeProvider>
+    <main className={inter.className}>
+      <ThemeProvider>
+        <ThemeContainer>
+          <AppBar />
+          <LayoutContainer>
+            <AutoRefresh>
+              <Component {...pageProps} />
+              <div className="h-10" />
+              <Me />
+              <Copy />
+            </AutoRefresh>
+          </LayoutContainer>
+        </ThemeContainer>
+      </ThemeProvider>
+    </main>
   )
 }
 export default MyApp
