@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import linktree from '../public/linktree.svg'
-import twitter from '../public/twitter.svg'
+import x from '../public/x.svg'
+import xDark from '../public/x_dark.svg'
 import github from '../public/github.svg'
 import githubDark from '../public/github_dark.svg'
 import { useTheme } from '../hooks/useTheme'
@@ -8,7 +9,7 @@ import { useTheme } from '../hooks/useTheme'
 const TWITTER_MY_AVATAR_URL =
   'https://pbs.twimg.com/profile_images/1606963603336482817/S498lmc__400x400.jpg'
 const LINKTREE_URL = 'https://linktr.ee/asazutaiga'
-const TWITTER_URL = 'https://twitter.com/asazutaiga'
+const X_URL = 'https://x.com/asazutaiga'
 const GITHUB_URL = 'https://github.com/asazutaiga'
 const RSS_URL = '/rss/feed.xml'
 
@@ -34,9 +35,9 @@ export const Me: React.VFC = () => {
             ariaLabel="Asazu TaigaのLinktree"
           />
           <CircleLink
-            href={TWITTER_URL}
-            src={twitter}
-            ariaLabel="Asazu TaigaのTwitter"
+            href={X_URL}
+            src={theme === 'light' ? x : xDark}
+            ariaLabel="Asazu TaigaのX"
           />
           <CircleLink
             href={GITHUB_URL}
