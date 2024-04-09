@@ -25,6 +25,14 @@
   @apply text-3xl font-bold mt-10 p-4 rounded-md;
 }
 
+.dark .markdown h1 a {
+  @apply text-gray-200 no-underline hover:underline;
+}
+
+.light .markdown h1 a {
+  @apply text-purple-700 no-underline hover:underline;
+}
+
 .dark .markdown h1 {
   @apply bg-gray-800;
 }
@@ -79,4 +87,28 @@
 
 *:not(code *, code) {
   font-family: 'Inter,sans-serif', sans-serif;
+}
+
+.light .markdown table {
+  @apply border border-gray-300;
+}
+
+.dark .markdown table {
+  @apply border border-gray-600;
+}
+
+.light .markdown th {
+  @apply bg-purple-200 p-2;
+}
+
+.dark .markdown th {
+  @apply bg-gray-800 p-2;
+}
+
+.light .markdown td {
+  @apply bg-purple-100 border-t border-gray-300 p-2;
+}
+
+.dark .markdown td {
+  @apply bg-gray-700 border-t border-gray-600 p-2;
 }

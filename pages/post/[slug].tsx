@@ -12,6 +12,7 @@ import NotFoundPage from '../404'
 import { Tag } from '../../components/Tag'
 import { FiInfo } from 'react-icons/fi'
 import rehypeRaw from 'rehype-raw'
+import remarkGfm from 'remark-gfm'
 
 type StaticPaths = {
   slug: string
@@ -89,14 +90,14 @@ const PostPage: NextPage<StaticProps> = (props) => {
 
       <div className="markdown mt-10">
         <Markdown
-          // @ts-ignore
           rehypePlugins={[rehypeRaw]}
+          remarkPlugins={[remarkGfm]}
           components={{
-            code({ inline, className, children }) {
+            code({ className, children }) {
               const match = /language-(\w+)/.exec(className || '')
 
               // twitter
-              if (match && match[1] === 'twitter') {
+              if (match && match[1] === 'twitter' && children) {
                 return (
                   <EmbedTweet
                     id={children.toString().replace(/\n$/, '')}
@@ -105,13 +106,23 @@ const PostPage: NextPage<StaticProps> = (props) => {
                 )
               }
 
-              return !inline && match ? (
+              return match && children ? (
                 <CodeBlock
                   language={match[1]}
                   value={children.toString().replace(/\n$/, '')}
                 />
               ) : (
                 <code className={className}>{children}</code>
+              )
+            },
+
+            h1({ children }) {
+              // heading id and anchor
+              const id = children?.toString().replace(/\s+/g, '-').toLowerCase()
+              return (
+                <h1 id={id}>
+                  <a href={`#${id}`}>{children}</a>
+                </h1>
               )
             },
           }}
