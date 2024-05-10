@@ -3,7 +3,7 @@ emoji: "🍝"
 title: "素人のための素人パスタ入門"
 createdAt: "2024/04/10"
 updatedAt: "2024/04/10"
-published: true
+published: false
 genre: "life"
 tags: ["Cooking"]
 ---
