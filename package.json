@@ -1,45 +1,23 @@
 {
-  "name": "tailwind-headlessui-next-blog",
-  "version": "0.1.0",
-  "private": true,
+  "name": "",
+  "type": "module",
+  "version": "0.0.1",
   "scripts": {
-    "dev:next": "next dev",
-    "dev:watch": "node watcher.js",
-    "dev": "npm-run-all2 -p dev:*",
-    "build": "next build",
-    "postbuild": "next-sitemap",
-    "start": "next start"
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
   },
   "dependencies": {
-    "@headlessui/react": "^1.4.0",
-    "@vercel/og": "^0.0.27",
-    "dayjs": "^1.10.6",
-    "feed": "^4.2.2",
-    "markdown-yaml-metadata-parser": "^3.0.0",
-    "next": "^14.1.4",
-    "next-sitemap": "^3.1.44",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-icons": "^4.3.1",
-    "react-markdown": "^9.0.1",
-    "react-syntax-highlighter": "^15.4.4",
-    "rehype-raw": "^7.0.0",
-    "remark-gfm": "^4.0.0",
-    "twemoji": "^14.0.2"
-  },
-  "devDependencies": {
-    "@types/gtag.js": "^0.0.7",
-    "@types/node": "^18.7.5",
-    "@types/react": "^18.2.75",
-    "@types/react-syntax-highlighter": "^13.5.2",
-    "autoprefixer": "^10.3.1",
-    "chokidar": "^3.6.0",
-    "eslint": "^8.57.0",
-    "eslint-config-next": "^14.1.4",
-    "npm-run-all2": "^6.1.2",
-    "postcss": "^8.3.6",
-    "tailwindcss": "^2.2.7",
-    "typescript": "^5.4.3",
-    "ws": "^8.16.0"
+    "@astro-community/astro-embed-twitter": "^0.5.8",
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/mdx": "^3.1.9",
+    "@astrojs/rss": "^4.0.9",
+    "@astrojs/sitemap": "^3.2.1",
+    "add": "^2.0.6",
+    "astro": "^4.16.13",
+    "pnpm": "^9.13.2",
+    "typescript": "^5.6.3"
   }
 }
