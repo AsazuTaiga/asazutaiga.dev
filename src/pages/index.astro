@@ -97,7 +97,7 @@ const posts = (await getCollection("blog"))
 									<h4 class="title">{post.data.title}</h4>
 									<p class="date">
 										<FormattedDate date={post.data.createdAt} />
-										{post.data.updatedAt && (
+										{post.data.updatedAt && post.data.updatedAt !== post.data.createdAt && (
 											<div class="last-updated-on">
 												Last updated on <FormattedDate date={post.data.updatedAt} />
 											</div>

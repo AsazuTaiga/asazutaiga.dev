@@ -67,7 +67,7 @@ const { title, createdAt, updatedAt, emoji } = Astro.props;
 						<div class="date">
 							<FormattedDate date={createdAt} />
 							{
-								updatedAt && (
+								updatedAt && updatedAt !== createdAt && (
 									<div class="last-updated-on">
 										Last updated on <FormattedDate date={updatedAt} />
 									</div>
