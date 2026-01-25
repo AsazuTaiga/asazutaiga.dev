@@ -16,7 +16,7 @@
     "dayjs": "^1.10.6",
     "feed": "^4.2.2",
     "markdown-yaml-metadata-parser": "^3.0.0",
-    "next": "^14.1.4",
+    "next": "14.2.35",
     "next-sitemap": "^3.1.44",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
