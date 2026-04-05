@@ -1,6 +1,7 @@
 ---
 title: "axios.getの<T>を必須にしたいなあと思った話"
 createdAt: "2021-08-05"
+archived: true
 ---
 
 # `Ｔ`を指定しないと`any`になる`axios.get`

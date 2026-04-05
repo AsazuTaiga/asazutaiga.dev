@@ -1,7 +1,12 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { fromContentEntry, getExcerpt, pickLatestPosts } from '../lib/posts';
+import {
+  fromContentEntry,
+  getDisplayTitle,
+  getExcerpt,
+  pickLatestPosts,
+} from '../lib/posts';
 
 const entries = await getCollection('posts');
 const latestPosts = pickLatestPosts(entries.map(fromContentEntry));
@@ -18,7 +23,7 @@ const latestPosts = pickLatestPosts(entries.map(fromContentEntry));
         <li>
           <a href={`/notes/${post.slug}`}>
             <p class="post-date">{post.createdAt}</p>
-            <h2>{post.title}</h2>
+            <h2>{getDisplayTitle(post.title, post.archived)}</h2>
             <p class="post-excerpt">{getExcerpt(post.body)}</p>
           </a>
         </li>

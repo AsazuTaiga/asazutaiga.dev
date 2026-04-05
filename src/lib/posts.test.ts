@@ -1,7 +1,9 @@
 import { describe, expect, test } from 'bun:test';
 import {
   ensureDateFormat,
+  fromContentEntry,
   getExcerpt,
+  getDisplayTitle,
   groupPostsByYear,
   pickLatestPosts,
   shiftYmd,
@@ -14,6 +16,7 @@ const makePost = (slug: string, createdAt: string): BlogPost => ({
   slug,
   title: slug,
   createdAt,
+  archived: false,
   body: `${slug} body`,
 });
 
@@ -87,5 +90,31 @@ describe('getExcerpt', () => {
   test('strips markdown and truncates', () => {
     const excerpt = getExcerpt('# Heading\n\nこれは **テスト** [link](https://example.com) です。', 11);
     expect(excerpt).toBe('Heading これは…');
+  });
+});
+
+describe('archived helpers', () => {
+  test('adds Archived suffix to archived post titles', () => {
+    expect(getDisplayTitle('ブログをリニューアルしました', true)).toBe(
+      'ブログをリニューアルしました (Archived)',
+    );
+    expect(getDisplayTitle('新しい記事', false)).toBe('新しい記事');
+  });
+
+  test('maps archived flag from content entry', () => {
+    const post = fromContentEntry({
+      id: 'renewal',
+      body: 'body',
+      data: {
+        title: 'ブログをリニューアルしました',
+        createdAt: '2021-07-31',
+        archived: true,
+      },
+    });
+
+    expect(post.archived).toBeTrue();
+    expect(getDisplayTitle(post.title, post.archived)).toBe(
+      'ブログをリニューアルしました (Archived)',
+    );
   });
 });

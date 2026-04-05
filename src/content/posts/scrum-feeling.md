@@ -1,6 +1,7 @@
 ---
 title: "スクラムをしばらくやった感想とメモ"
 createdAt: "2021-10-02"
+archived: true
 ---
 
 # はじめに

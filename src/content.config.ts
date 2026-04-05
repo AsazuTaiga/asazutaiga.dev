@@ -9,6 +9,7 @@ const posts = defineCollection({
   schema: z.object({
     title: z.string().min(1),
     createdAt: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+    archived: z.boolean().default(false),
   }),
 });
 

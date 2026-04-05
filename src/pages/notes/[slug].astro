@@ -1,6 +1,7 @@
 ---
 import { getCollection, getEntry, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getDisplayTitle } from '../../lib/posts';
 
 export async function getStaticPaths() {
   const posts = await getCollection('posts');
@@ -20,12 +21,18 @@ if (!post) {
 }
 
 const { Content } = await render(post);
+const displayTitle = getDisplayTitle(post.data.title, post.data.archived);
 ---
 
-<BaseLayout title={`${post.data.title} | asazutaiga.dev`} description={post.data.title}>
+<BaseLayout title={`${displayTitle} | asazutaiga.dev`} description={post.data.title}>
   <article class="article">
     <p class="post-date">{post.data.createdAt}</p>
-    <h1>{post.data.title}</h1>
+    <h1>{displayTitle}</h1>
+    {post.data.archived && (
+      <p class="archive-note">
+        Archived: 旧ブログから移行した記事です。内容が古い可能性があります。
+      </p>
+    )}
     <Content />
   </article>
 

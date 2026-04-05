@@ -1,6 +1,7 @@
 ---
 title: "i18n jsonファイルのキーの不一致をTypeScriptで防いでいる話"
 createdAt: "2024-05-10"
+archived: true
 ---
 
 # i18nあるある

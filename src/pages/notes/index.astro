@@ -1,7 +1,12 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { fromContentEntry, getExcerpt, groupPostsByYear } from '../../lib/posts';
+import {
+  fromContentEntry,
+  getDisplayTitle,
+  getExcerpt,
+  groupPostsByYear,
+} from '../../lib/posts';
 
 const entries = await getCollection('posts');
 const grouped = groupPostsByYear(entries.map(fromContentEntry));
@@ -18,7 +23,7 @@ const grouped = groupPostsByYear(entries.map(fromContentEntry));
           <li>
             <a href={`/notes/${post.slug}`}>
               <p class="post-date">{post.createdAt}</p>
-              <h3>{post.title}</h3>
+              <h3>{getDisplayTitle(post.title, post.archived)}</h3>
               <p class="post-excerpt">{getExcerpt(post.body)}</p>
             </a>
           </li>

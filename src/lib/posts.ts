@@ -2,6 +2,7 @@ export type BlogPost = {
   slug: string;
   title: string;
   createdAt: string;
+  archived: boolean;
   body: string;
 };
 
@@ -16,6 +17,7 @@ export type ContentPostEntryLike = {
   data: {
     title: string;
     createdAt: string;
+    archived: boolean;
   };
 };
 
@@ -125,11 +127,16 @@ export const getExcerpt = (markdown: string, maxChars: number = 110): string => 
   return `${plain.slice(0, maxChars).trimEnd()}…`;
 };
 
+export const getDisplayTitle = (title: string, archived: boolean): string => {
+  return archived ? `${title} (Archived)` : title;
+};
+
 export const fromContentEntry = (entry: ContentPostEntryLike): BlogPost => {
   return {
     slug: entry.id,
     title: entry.data.title,
     createdAt: ensureDateFormat(entry.data.createdAt),
+    archived: entry.data.archived,
     body: entry.body,
   };
 };

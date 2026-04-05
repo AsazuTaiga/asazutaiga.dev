@@ -1,6 +1,7 @@
 ---
 title: "『ユーザービリティエンジニアリング』読書ノート"
 createdAt: "2021-12-13"
+archived: true
 ---
 
 この記事は[エンジニアリングに興味があるデザイナー、デザインに興味があるエンジニア Advent Calendar 2021](https://qiita.com/advent-calendar/2021/design-code)の13日目です。

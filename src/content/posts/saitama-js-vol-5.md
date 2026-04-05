@@ -1,6 +1,7 @@
 ---
 title: "【登壇報告+資料】saitama.jsで発表してきました～Jotaiでフォームを作る話とか"
 createdAt: "2023-03-22"
+archived: true
 ---
 
 埼玉県は大宮にて開催されました、[Saitama.js vol.5](https://saitamajs.connpass.com/event/272660/)で登壇してきました。

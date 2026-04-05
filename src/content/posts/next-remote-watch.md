@@ -1,6 +1,7 @@
 ---
 title: "Next.jsで任意のファイル保存時にホットリロード"
 createdAt: "2021-08-07"
+archived: true
 ---
 
 # 追記（2024/04/01）

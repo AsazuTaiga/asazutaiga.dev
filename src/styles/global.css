@@ -203,6 +203,15 @@ h1 {
   margin-bottom: 1.25rem;
 }
 
+.archive-note {
+  margin: 0 0 1.1rem;
+  padding: 0.7rem 0.85rem;
+  border-left: 2px solid var(--accent);
+  background: var(--accent-soft);
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
 .article :is(h2, h3) {
   margin-top: 1.55rem;
   margin-bottom: 0.45rem;
