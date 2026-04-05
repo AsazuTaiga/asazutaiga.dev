@@ -8,11 +8,7 @@ const grouped = groupPostsByYear(entries.map(fromContentEntry));
 ---
 
 <BaseLayout title="asazutaiga.dev | Notes" description="All notes grouped by year.">
-  <section class="hero">
-    <p class="label">Notes</p>
-    <h1>すべてのノート</h1>
-    <p class="subtitle">年ごとに並べています（全展開）。</p>
-  </section>
+  <h1 class="page-title">Notes</h1>
 
   {grouped.map((group) => (
     <section class="year-section">

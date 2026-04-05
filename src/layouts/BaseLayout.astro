@@ -38,8 +38,18 @@ const canonical = new URL(currentPath, Astro.site ?? 'https://asazutaiga.dev');
     <main class="container main-content">
       <slot />
     </main>
-    <footer class="container site-footer">
-      <p>blog is paper plane. just light.</p>
+    <footer class="container site-footer" aria-label="Social links">
+      <nav class="footer-links">
+        <a href="https://x.com/asazutaiga" target="_blank" rel="noreferrer" aria-label="X">
+          <span>X</span>
+        </a>
+        <a href="https://github.com/AsazuTaiga" target="_blank" rel="noreferrer" aria-label="GitHub">
+          <span>GitHub</span>
+        </a>
+        <a href="/rss.xml" aria-label="RSS">
+          <span>RSS</span>
+        </a>
+      </nav>
     </footer>
   </body>
 </html>
