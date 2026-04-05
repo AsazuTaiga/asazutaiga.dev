@@ -22,9 +22,16 @@ if (!post) {
 
 const { Content } = await render(post);
 const displayTitle = getDisplayTitle(post.data.title, post.data.archived);
+const ogImage = `/og/${post.id}.png`;
 ---
 
-<BaseLayout title={`${displayTitle} | asazutaiga.dev`} description={post.data.title}>
+<BaseLayout
+  title={`${displayTitle} | asazutaiga.dev`}
+  description={post.data.title}
+  ogTitle={post.data.title}
+  ogType="article"
+  ogImage={ogImage}
+>
   <article class="article">
     <p class="post-date">{post.data.createdAt}</p>
     <h1>{displayTitle}</h1>

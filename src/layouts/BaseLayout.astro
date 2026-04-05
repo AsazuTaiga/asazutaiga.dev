@@ -4,15 +4,23 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
+  ogTitle?: string;
+  ogImage?: string;
+  ogType?: 'website' | 'article';
 }
 
 const {
   title = 'asazutaiga.dev',
   description = 'Asazu Taiga notes',
+  ogTitle = title,
+  ogImage,
+  ogType = 'website',
 } = Astro.props;
 
 const currentPath = Astro.url.pathname;
-const canonical = new URL(currentPath, Astro.site ?? 'https://asazutaiga.dev');
+const site = Astro.site ?? 'https://asazutaiga.dev';
+const canonical = new URL(currentPath, site);
+const ogImageUrl = ogImage ? new URL(ogImage, site).toString() : undefined;
 ---
 
 <!doctype html>
@@ -23,6 +31,15 @@ const canonical = new URL(currentPath, Astro.site ?? 'https://asazutaiga.dev');
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical.toString()} />
+    <meta property="og:title" content={ogTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonical.toString()} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={ogTitle} />
+    <meta name="twitter:description" content={description} />
+    {ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
+    {ogImageUrl && <meta name="twitter:image" content={ogImageUrl} />}
   </head>
   <body>
     <header class="site-header">

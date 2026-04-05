@@ -14,6 +14,7 @@ Astro で再構築した個人ブログです。
 - `/notes` : 全記事を年別で一覧表示
 - `/notes/[slug]` : 記事詳細
 - `/post/[slug]` : `/notes/[slug]` へリダイレクト（preview時はHTML redirect、Vercelでは `vercel.json` により恒久リダイレクト）
+- `/og/[slug].png` : 記事タイトルから OGP 画像をビルド時に自動生成
 - `/rss.xml` : RSS
 
 ## Local Development
