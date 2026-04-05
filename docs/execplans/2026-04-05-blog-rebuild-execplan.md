@@ -19,9 +19,9 @@
 - [x] (2026-04-05 10:34 JST) 表示要件を確定（ホームはJST基準で過去365日以内、最大20件）。
 - [x] (2026-04-05 10:34 JST) frontmatter 最小化を確定（必須: `title`, `createdAt`、`createdAt` は `YYYY-MM-DD`）。
 - [x] (2026-04-05 10:34 JST) 実行環境を Bun 前提に確定（ローカル/デプロイともに Bun）。
-- [ ] Astro プロジェクトへの移行実装。
-- [ ] 記事移行（`md/` -> `src/content/posts/`）とリンク整合。
-- [ ] リダイレクト、RSS、sitemap、最終検証。
+- [x] (2026-04-05 10:44 JST) Astro プロジェクトへ移行し、旧 Next.js ルーティング/実装を除去。
+- [x] (2026-04-05 10:44 JST) 公開済み記事12本を `src/content/posts/*.md` へ移行し、`title`/`createdAt` 最小 frontmatter に正規化。
+- [x] (2026-04-05 10:44 JST) `/`、`/notes`、`/notes/[slug]`、RSS/sitemap を実装し、`bun test` と `bun run build` を成功確認。
 
 ## Surprises & Discoveries
 
@@ -30,6 +30,9 @@
 
 - Observation: `pinned` 運用は軽量更新の目的に反し、更新停止要因になりやすい。
   Evidence: ユーザー判断で `pinned` 案を撤回し、`createdAt` 降順のみへ単純化。
+
+- Observation: Astro static の redirect は preview では HTTP 200 + HTML redirect 表現になる。
+  Evidence: `curl -I http://127.0.0.1:4321/post/renewal` で 200 を確認し、`vercel.json` に恒久リダイレクトを追加してデプロイ時 301 を担保。
 
 ## Decision Log
 
@@ -53,9 +56,13 @@
   Rationale: 開発体験と実行速度の向上を狙い、運用の前提を明示するため。
   Date/Author: 2026-04-05 / User + Codex
 
+- Decision: コンテンツ拡張子は `.md` を標準とし、MDX は必要時のみ追加する。
+  Rationale: 既存記事の記法をそのまま移行しつつ、将来の MDX 拡張余地を残すため。
+  Date/Author: 2026-04-05 / User + Codex
+
 ## Outcomes & Retrospective
 
-現時点の成果は、実装前の主要方針を矛盾なく固定できた点です。特に「ホームは最新性に集中」「過去記事は `/notes` に委譲」「必須メタは2項目のみ」という原則が確立できました。未完了は実装そのものと移行検証です。実装開始後は、方針逸脱（必須項目の増加、ホーム情報過多、URL互換崩れ）が起きないよう本書を基準に差分を判断します。
+主要成果は、Next.js ベース実装を Astro SSG へ置換し、合意した IA をそのまま動作させたことです。`/` は「過去365日・最大20件」、`/notes` は年別一覧、`/notes/[slug]` は本文表示、`/rss.xml` と sitemap も生成されます。`/post/[slug]` 互換は Astro redirect + Vercel redirect 設定で維持しました。残課題はデプロイ環境での 301 実ステータス確認のみです。
 
 ## Context and Orientation
 
@@ -67,7 +74,7 @@
 
 まず Astro + MDX + Content Collections を導入し、Bun で実行できる基本構成を作ります。既存の Next.js ページとユーティリティは段階的に置換し、最終的に不要コードを削除します。
 
-次に記事データの正本を `src/content/posts/**/*.mdx` に移し、`title` と `createdAt` だけを必須とするスキーマを定義します。`createdAt` は `YYYY-MM-DD` を受け取り、日付として解釈できない場合はビルド失敗にします。ホーム用の抜粋は本文先頭から自動抽出し、frontmatter追加を要求しません。
+次に記事データの正本を `src/content/posts/**/*.{md,mdx}` に移し、`title` と `createdAt` だけを必須とするスキーマを定義します。`createdAt` は `YYYY-MM-DD` を受け取り、日付として解釈できない場合はビルド失敗にします。ホーム用の抜粋は本文先頭から自動抽出し、frontmatter追加を要求しません。
 
 ルーティングは `/`、`/notes`、`/notes/[slug]` を実装し、`/post/[slug]` 互換のための301を設定します。ホームは JST でのビルド日時から365日以内の記事を抽出し、新しい順で最大20件表示します。`/notes` は全記事を年単位で縦並び表示します。
 
@@ -83,7 +90,7 @@
 4. `src/pages/index.astro`（または同等のルート）でホーム一覧（過去365日・最大20件）を実装する。
 5. `src/pages/notes/index.astro` で年別縦並び一覧を実装する。
 6. `src/pages/notes/[slug].astro` で記事詳細を実装する。
-7. `src/pages/post/[slug].ts`（またはアダプタ準拠の方法）で 301 リダイレクトを実装する。
+7. `astro.config.mjs` の redirect と `vercel.json` で `/post/[slug]` -> `/notes/[slug]` を維持する。
 8. RSS/sitemap 生成設定を追加する。
 9. Bun コマンドで dev/build/preview を確認する。
 
@@ -102,7 +109,7 @@
 - `/` で「過去365日以内の記事のみ」が新着順で表示され、件数は最大20件。
 - `/notes` で全記事が年見出しごとに表示される。
 - `/notes/[slug]` で記事本文が表示される。
-- `/post/[slug]` にアクセスすると `/notes/[slug]` へ 301 リダイレクトされる。
+- `/post/[slug]` 互換が維持される（Astro preview では HTML redirect、デプロイでは `vercel.json` により恒久リダイレクト）。
 - RSS と sitemap が生成され、主要URLを含む。
 
 ## Idempotence and Recovery
@@ -115,7 +122,7 @@
 
     - 現行は Next.js pages router（pages/index.tsx, pages/post/[slug].tsx）
     - 記事は md/*.md のローカルファイル読み込み（utils/post.ts）
-    - package.json は npm scripts 前提、ただし方針は bun 前提に更新済み
+    - package.json は Bun 実行前提に更新済み（`packageManager` 固定）
 
 設計確定事項（対話合意）:
 
@@ -131,7 +138,7 @@
 
 最終的に必要なインターフェース:
 
-- 記事スキーマ: `title: string`, `createdAt: date`（`YYYY-MM-DD` 入力）
+- 記事スキーマ: `title: string`, `createdAt: string`（`YYYY-MM-DD` 入力）
 - 一覧取得関数: 全記事取得、最新順ソート、ホーム用フィルター（365日以内・20件上限）
 - ルート: `/`, `/notes`, `/notes/[slug]`, `/post/[slug]`(301)
 - 出力: HTML静的生成、`/rss.xml`、`/sitemap-index.xml`（または同等）
@@ -139,3 +146,4 @@
 ---
 
 Revision Note (2026-04-05): 初版作成。対話で確定した IA / URL / frontmatter 最小化 / Bun 前提 / 検証条件を自己完結で記録した。
+Revision Note (2026-04-05): 実装完了に合わせて Progress/Discoveries/Decision/Outcomes を更新し、redirect 実挙動（preview と deploy の差）を追記した。

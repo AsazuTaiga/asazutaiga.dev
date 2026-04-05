@@ -1,0 +1,38 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { fromContentEntry, getExcerpt, pickLatestPosts } from '../lib/posts';
+
+const entries = await getCollection('posts');
+const latestPosts = pickLatestPosts(entries.map(fromContentEntry));
+---
+
+<BaseLayout title="asazutaiga.dev | Latest" description="Latest notes from the last year.">
+  <section class="hero">
+    <p class="label">Latest</p>
+    <h1>過去1年のノート</h1>
+    <p class="subtitle">
+      ビルド時点（JST）から365日以内の記事を新しい順で最大20件表示しています。
+    </p>
+  </section>
+
+  {latestPosts.length === 0 ? (
+    <p class="empty">過去1年の記事はまだありません。</p>
+  ) : (
+    <ul class="post-list">
+      {latestPosts.map((post) => (
+        <li>
+          <a href={`/notes/${post.slug}`}>
+            <p class="post-date">{post.createdAt}</p>
+            <h2>{post.title}</h2>
+            <p class="post-excerpt">{getExcerpt(post.body)}</p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  )}
+
+  <p class="more-link-wrap">
+    <a class="more-link" href="/notes">View all notes →</a>
+  </p>
+</BaseLayout>

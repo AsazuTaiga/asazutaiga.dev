@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/post/:slug",
+      "destination": "/notes/:slug",
+      "permanent": true
+    }
+  ]
+}

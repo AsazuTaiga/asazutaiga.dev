@@ -1,0 +1,33 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { fromContentEntry, getExcerpt, groupPostsByYear } from '../../lib/posts';
+
+const entries = await getCollection('posts');
+const grouped = groupPostsByYear(entries.map(fromContentEntry));
+---
+
+<BaseLayout title="asazutaiga.dev | Notes" description="All notes grouped by year.">
+  <section class="hero">
+    <p class="label">Notes</p>
+    <h1>すべてのノート</h1>
+    <p class="subtitle">年ごとに並べています（全展開）。</p>
+  </section>
+
+  {grouped.map((group) => (
+    <section class="year-section">
+      <h2>{group.year}</h2>
+      <ul class="post-list">
+        {group.posts.map((post) => (
+          <li>
+            <a href={`/notes/${post.slug}`}>
+              <p class="post-date">{post.createdAt}</p>
+              <h3>{post.title}</h3>
+              <p class="post-excerpt">{getExcerpt(post.body)}</p>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  ))}
+</BaseLayout>

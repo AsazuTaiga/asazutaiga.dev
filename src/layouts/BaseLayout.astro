@@ -1,0 +1,45 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'asazutaiga.dev',
+  description = 'Asazu Taiga notes',
+} = Astro.props;
+
+const currentPath = Astro.url.pathname;
+const canonical = new URL(currentPath, Astro.site ?? 'https://asazutaiga.dev');
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical.toString()} />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="site-title" href="/">asazutaiga.dev</a>
+        <nav class="site-nav">
+          <a class={currentPath === '/' ? 'active' : ''} href="/">Latest</a>
+          <a class={currentPath.startsWith('/notes') ? 'active' : ''} href="/notes">Notes</a>
+          <a href="/rss.xml">RSS</a>
+        </nav>
+      </div>
+    </header>
+    <main class="container main-content">
+      <slot />
+    </main>
+    <footer class="container site-footer">
+      <p>blog is paper plane. just light.</p>
+    </footer>
+  </body>
+</html>
