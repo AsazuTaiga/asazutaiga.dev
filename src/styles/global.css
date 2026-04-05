@@ -234,6 +234,14 @@ h1 {
   color: var(--ink-soft);
 }
 
+.article blockquote.twitter-tweet {
+  max-width: 550px;
+  margin-inline: auto;
+  padding-left: 0;
+  border-left: 0;
+  color: inherit;
+}
+
 .article pre {
   overflow-x: auto;
   margin: 1rem 0;

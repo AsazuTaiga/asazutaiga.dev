@@ -43,6 +43,36 @@ const ogImage = `/og/${post.id}.png`;
     <Content />
   </article>
 
+  <script is:inline>
+    const loadTwitterWidgets = () => {
+      if (!document.querySelector('.twitter-tweet')) {
+        return;
+      }
+
+      if (window.twttr && window.twttr.widgets && typeof window.twttr.widgets.load === 'function') {
+        window.twttr.widgets.load();
+        return;
+      }
+
+      if (document.querySelector('script[data-twitter-widgets="true"]')) {
+        return;
+      }
+
+      const script = document.createElement('script');
+      script.src = 'https://platform.twitter.com/widgets.js';
+      script.async = true;
+      script.charset = 'utf-8';
+      script.setAttribute('data-twitter-widgets', 'true');
+      document.head.append(script);
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', loadTwitterWidgets, { once: true });
+    } else {
+      loadTwitterWidgets();
+    }
+  </script>
+
   <p class="back-link-wrap">
     <a class="back-link" href="/notes">← Back to notes</a>
   </p>
