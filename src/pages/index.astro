@@ -18,7 +18,7 @@ const latestPosts = pickLatestPosts(entries.map(fromContentEntry));
   {latestPosts.length === 0 ? (
     <p class="empty">過去1年の記事はまだありません。</p>
   ) : (
-    <ul class="post-list">
+    <ul class="post-list post-list--flush-top">
       {latestPosts.map((post) => (
         <li>
           <a href={`/notes/${post.slug}`}>
