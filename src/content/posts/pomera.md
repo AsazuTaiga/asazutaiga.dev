@@ -1,6 +1,6 @@
 ---
 title: "デジタルメモPomeraで文章を書いてインターネットに投げまくればいいじゃない"
-createdAt: "2026-MM-DD"
+createdAt: "2026-04-12"
 archived: false
 ---
 
