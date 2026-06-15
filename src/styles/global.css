@@ -227,6 +227,10 @@ h1 {
   margin: 0.78rem 0;
 }
 
+.article :is(ul, ol) {
+  padding-inline-start: 1.5rem;
+}
+
 .article a {
   color: var(--accent);
 }
