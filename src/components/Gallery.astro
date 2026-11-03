@@ -95,7 +95,12 @@ const displayedPhotos = galleryHref ? photos.slice(0, pageSize) : photos;
         if (event.key === 'ArrowRight' && current < buttons.length - 1) { event.preventDefault(); show(current + 1); }
       });
       this.querySelector('.gallery-close')!.addEventListener('click', () => dialog.close());
-      dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
+      dialog.addEventListener('click', (event) => {
+        const target = event.target;
+        if (target instanceof Element && !target.closest('button, .gallery-expanded, figcaption')) {
+          dialog.close();
+        }
+      });
       dialog.addEventListener('close', () => {
         expanded.removeAttribute('src');
         document.documentElement.style.overflow = previousOverflow;
@@ -114,15 +119,25 @@ const displayedPhotos = galleryHref ? photos.slice(0, pageSize) : photos;
   .gallery-thumbnail img { display: block; width: 100%; height: 100%; max-height: none; margin: 0; object-fit: cover; }
   button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
   .gallery-more { display: block; width: fit-content; margin: 1rem auto; border: 1px solid var(--line-strong); border-radius: 4px; padding: 0.5rem 1rem; background: var(--paper); color: var(--ink); font: inherit; cursor: pointer; text-align: center; text-decoration: none; }
-  dialog { width: 100%; height: 100%; max-width: 100vw; max-height: 100dvh; margin: auto; padding: 3.5rem 0.5rem 0.5rem; border: 0; background: transparent; color: white; }
-  dialog[open] { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 0.5rem; }
+  dialog { width: 100%; height: 100%; max-width: 100vw; max-height: 100dvh; margin: auto; padding: 4.5rem clamp(5rem, 9vw, 8rem) 1.5rem; border: 0; background: transparent; color: white; }
+  dialog[open] { display: grid; place-items: center; }
   dialog::backdrop { background: rgb(0 0 0 / 90%); }
-  figure { margin: 0; min-width: 0; }
+  figure { margin: 0; min-width: 0; max-width: 100%; }
   .gallery-expanded { display: block; width: auto; height: auto; max-width: 100%; max-height: calc(100dvh - 9rem); margin: 0 auto; object-fit: contain; }
   figcaption { text-align: center; margin-top: 0.5rem; font-size: 0.85rem; max-height: 3rem; overflow-y: auto; }
   .gallery-close, .gallery-prev, .gallery-next { padding: 0.4rem 0.65rem; border: 1px solid #fff; border-radius: 4px; background: #222; color: #fff; font: inherit; cursor: pointer; }
   .gallery-close { position: absolute; top: 0.75rem; right: 1rem; }
-  .gallery-prev, .gallery-next { font-size: 1.5rem; }
+  .gallery-prev, .gallery-next { position: absolute; top: 50%; transform: translateY(-50%); display: grid; place-items: center; width: 64px; height: 80px; padding: 0; border-radius: 12px; background: rgb(32 32 32 / 85%); font-size: 3rem; line-height: 1; touch-action: manipulation; }
+  .gallery-prev { left: max(1rem, env(safe-area-inset-left)); }
+  .gallery-next { right: max(1rem, env(safe-area-inset-right)); }
+  .gallery-prev:not(:disabled):hover, .gallery-next:not(:disabled):hover { background: #444; }
   button:disabled { opacity: 0.3; cursor: default; }
-  @media (max-width: 480px) { .gallery-grid { gap: 0.35rem; } }
+  @media (max-width: 480px) {
+    .gallery-grid { gap: 0.35rem; }
+    dialog { padding: 4rem 0.75rem 6.5rem; }
+    .gallery-expanded { max-height: calc(100dvh - 13rem); }
+    .gallery-prev, .gallery-next { top: auto; bottom: max(1rem, env(safe-area-inset-bottom)); transform: none; width: 64px; height: 64px; }
+    .gallery-prev { left: calc(50% - 80px); }
+    .gallery-next { right: calc(50% - 80px); }
+  }
 </style>
