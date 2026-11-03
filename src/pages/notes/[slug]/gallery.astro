@@ -15,7 +15,7 @@ export async function getStaticPaths() {
 }
 
 const { post, photos } = Astro.props;
-const title = `${getDisplayTitle(post.data.title, post.data.archived)} — 写真ギャラリー`;
+const title = `${getDisplayTitle(post.data.title, post.data.archived)} — フォトギャラリー`;
 const articleHref = `/notes/${post.id}`;
 ---
 

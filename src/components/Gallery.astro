@@ -8,8 +8,9 @@ interface Props {
   galleryHref?: string;
 }
 
-const { images, label = '写真ギャラリー', initialCount = 9, galleryHref } = Astro.props;
-const pageSize = Math.max(1, Math.floor(initialCount) || 9);
+const { images, label = 'フォトギャラリー', initialCount, galleryHref } = Astro.props;
+const defaultCount = 9;
+const pageSize = Math.max(1, Math.floor(initialCount ?? defaultCount) || defaultCount);
 const base = import.meta.env.DEV ? '/media' : (import.meta.env.PUBLIC_MEDIA_BASE_URL ?? '');
 if (base && base !== '/media' && !/^https:\/\/[^/]+/.test(base)) {
   throw new Error('PUBLIC_MEDIA_BASE_URL には HTTPS の画像配信 URL を指定してください。');
@@ -20,30 +21,55 @@ const displayedPhotos = galleryHref ? photos.slice(0, pageSize) : photos;
 ---
 
 <photo-gallery aria-label={label} data-page-size={pageSize}>
-  <div class="gallery-grid">
-    {displayedPhotos.map((photo, index) => (
-      <button class="gallery-thumbnail" type="button" hidden={index >= pageSize}
-        aria-label={`${photo.alt || `写真 ${index + 1}`}を拡大表示`}
-        data-src={photo.src} data-alt={photo.alt}>
-        <img src={index < pageSize ? photo.thumbnail : undefined}
-          data-thumbnail={photo.thumbnail} alt={photo.alt}
-          width={photo.thumbnailWidth ?? photo.width} height={photo.thumbnailHeight ?? photo.height}
-          loading="lazy" decoding="async" />
-      </button>
-    ))}
-  </div>
-  {galleryHref
-    ? <a class="gallery-more" href={galleryHref}>すべての写真を見る（{photos.length}枚） →</a>
-    : photos.length > pageSize && <button class="gallery-more" type="button">もっと見る（残り {photos.length - pageSize} 枚）</button>}
-  <dialog aria-label="画像の拡大表示">
-    <button class="gallery-close" type="button" aria-label="拡大表示を閉じる" autofocus>閉じる ×</button>
-    <button class="gallery-prev" type="button" aria-label="前の写真">‹</button>
-    <figure>
-      <img class="gallery-expanded" alt="" />
-      <figcaption aria-live="polite"></figcaption>
-    </figure>
-    <button class="gallery-next" type="button" aria-label="次の写真">›</button>
-  </dialog>
+  {galleryHref ? (
+    <a class="gallery-preview" href={galleryHref} aria-label={`フォトギャラリー：全${photos.length}枚を見る`}>
+      <div class="gallery-preview-heading">
+        <span>フォトギャラリー</span>
+        <span>全{photos.length}枚 →</span>
+      </div>
+      <div class="gallery-grid">
+        {displayedPhotos.map((photo, index) => (
+          <div class="gallery-thumbnail">
+            <img src={photo.thumbnail} alt={photo.alt}
+              width={photo.thumbnailWidth ?? photo.width} height={photo.thumbnailHeight ?? photo.height}
+              loading="lazy" decoding="async" />
+            {index === displayedPhotos.length - 1 && photos.length > displayedPhotos.length && (
+              <span class="gallery-remaining" aria-hidden="true">
+                <strong>+{photos.length - displayedPhotos.length}枚</strong>
+                <span>続きを見る →</span>
+              </span>
+            )}
+          </div>
+        ))}
+      </div>
+      <span class="gallery-preview-footer">全{photos.length}枚のギャラリーを開く →</span>
+    </a>
+  ) : (
+    <>
+      <div class="gallery-grid">
+        {displayedPhotos.map((photo, index) => (
+          <button class="gallery-thumbnail" type="button" hidden={index >= pageSize}
+            aria-label={`${photo.alt || `写真 ${index + 1}`}を拡大表示`}
+            data-src={photo.src} data-alt={photo.alt}>
+            <img src={index < pageSize ? photo.thumbnail : undefined}
+              data-thumbnail={photo.thumbnail} alt={photo.alt}
+              width={photo.thumbnailWidth ?? photo.width} height={photo.thumbnailHeight ?? photo.height}
+              loading="lazy" decoding="async" />
+          </button>
+        ))}
+      </div>
+      {photos.length > pageSize && <button class="gallery-more" type="button">もっと見る（残り {photos.length - pageSize} 枚）</button>}
+      <dialog aria-label="画像の拡大表示">
+        <button class="gallery-close" type="button" aria-label="拡大表示を閉じる" autofocus>閉じる ×</button>
+        <button class="gallery-prev" type="button" aria-label="前の写真">‹</button>
+        <figure>
+          <img class="gallery-expanded" alt="" />
+          <figcaption aria-live="polite"></figcaption>
+        </figure>
+        <button class="gallery-next" type="button" aria-label="次の写真">›</button>
+      </dialog>
+    </>
+  )}
 </photo-gallery>
 
 <script>
@@ -51,7 +77,8 @@ const displayedPhotos = galleryHref ? photos.slice(0, pageSize) : photos;
     connectedCallback() {
       if (this.dataset.initialized) return;
       this.dataset.initialized = 'true';
-      const dialog = this.querySelector('dialog')!;
+      const dialog = this.querySelector('dialog');
+      if (!dialog) return;
       const expanded = this.querySelector<HTMLImageElement>('.gallery-expanded')!;
       const caption = this.querySelector('figcaption')!;
       const buttons = [...this.querySelectorAll<HTMLButtonElement>('.gallery-thumbnail')];
@@ -113,6 +140,17 @@ const displayedPhotos = galleryHref ? photos.slice(0, pageSize) : photos;
 
 <style>
   photo-gallery { display: block; margin-block: 1.5rem; }
+  .gallery-preview { display: block; padding: 1rem; border: 1px solid var(--line-strong); border-radius: 8px; background: var(--paper); color: var(--ink); text-decoration: none; }
+  .gallery-preview-heading { display: flex; justify-content: space-between; gap: 1rem; margin-bottom: 0.75rem; font-weight: 700; }
+  .gallery-preview-heading > :last-child { color: var(--accent); white-space: nowrap; }
+  .gallery-preview .gallery-grid { grid-template-columns: repeat(9, minmax(0, 1fr)); gap: 0.4rem; }
+  .gallery-preview .gallery-thumbnail { position: relative; cursor: pointer; aspect-ratio: 1; }
+  .gallery-preview-footer { display: block; margin-top: 0.85rem; padding: 0.75rem; border-radius: 4px; background: var(--accent-soft); color: var(--accent); text-align: center; font-weight: 700; }
+  .gallery-preview:hover, .gallery-preview:focus-visible { border-color: var(--accent); }
+  .gallery-preview:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+  .gallery-preview:hover .gallery-preview-footer { text-decoration: underline; }
+  .gallery-remaining { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgb(0 0 0 / 65%); color: #fff; font-size: 0.7rem; }
+  .gallery-remaining strong { font-size: 1.3em; }
   [hidden] { display: none !important; }
   .gallery-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.65rem; }
   .gallery-thumbnail { display: block; padding: 0; border: 0; border-radius: 6px; overflow: hidden; background: var(--line); cursor: zoom-in; aspect-ratio: 1; }
@@ -134,6 +172,7 @@ const displayedPhotos = galleryHref ? photos.slice(0, pageSize) : photos;
   button:disabled { opacity: 0.3; cursor: default; }
   @media (max-width: 480px) {
     .gallery-grid { gap: 0.35rem; }
+    .gallery-preview .gallery-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
     dialog { padding: 4rem 0.75rem 6.5rem; }
     .gallery-expanded { max-height: calc(100dvh - 13rem); }
     .gallery-prev, .gallery-next { top: auto; bottom: max(1rem, env(safe-area-inset-bottom)); transform: none; width: 64px; height: 64px; }
