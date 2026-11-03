@@ -9,7 +9,10 @@
     "build": "./node_modules/.bin/astro build",
     "check": "./node_modules/.bin/astro check",
     "preview": "./node_modules/.bin/astro preview",
-    "test": "bun test"
+    "test": "bun test",
+    "media:prepare": "bun scripts/media.ts prepare",
+    "media:upload": "bun scripts/media.ts upload",
+    "media:pull": "bun scripts/media.ts pull"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.0.0",
@@ -18,9 +21,15 @@
     "astro": "^5.0.0",
     "astro-og-canvas": "^0.11.0",
     "remark-breaks": "^4.0.0",
-    "remark-gfm": "^4.0.0"
+    "remark-gfm": "^4.0.0",
+    "remark-mdx": "^3.1.1",
+    "remark-parse": "^11.0.0",
+    "unified": "^11.0.5"
   },
   "devDependencies": {
+    "@aws-sdk/client-s3": "^3.1161.0",
+    "@types/bun": "^1.4.4",
+    "sharp": "^0.35.5",
     "typescript": "^5.9.0"
   }
 }

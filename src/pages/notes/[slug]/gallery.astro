@@ -1,0 +1,30 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Gallery from '../../../components/Gallery.astro';
+import { getDisplayTitle } from '../../../lib/posts';
+import type { GalleryPhoto } from '../../../lib/gallery';
+
+export async function getStaticPaths() {
+  const manifests = import.meta.glob<{ default: GalleryPhoto[] }>('../../../data/galleries/*.json', { eager: true });
+  const posts = await getCollection('posts');
+  return posts.flatMap((post) => {
+    const photos = manifests[`../../../data/galleries/${post.id}.json`]?.default;
+    return photos?.length ? [{ params: { slug: post.id }, props: { post, photos } }] : [];
+  });
+}
+
+const { post, photos } = Astro.props;
+const title = `${getDisplayTitle(post.data.title, post.data.archived)} — 写真ギャラリー`;
+const articleHref = `/notes/${post.id}`;
+---
+
+<BaseLayout title={`${title} | asazutaiga.dev`} description={`${post.data.title}の写真${photos.length}枚。`} ogImage={`/og/${post.id}.png`}>
+  <article class="article">
+    <a class="back-link" href={articleHref}>← 記事に戻る</a>
+    <h1>{title}</h1>
+    <p>{photos.length}枚の写真。クリックで拡大できます。</p>
+    <Gallery images={photos} initialCount={photos.length} />
+  </article>
+  <p class="back-link-wrap"><a class="back-link" href={articleHref}>← 記事に戻る</a></p>
+</BaseLayout>

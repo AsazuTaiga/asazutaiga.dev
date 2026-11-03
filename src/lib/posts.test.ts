@@ -87,6 +87,25 @@ describe('groupPostsByYear', () => {
 });
 
 describe('getExcerpt', () => {
+  test('omits MDX imports, exports, components and expressions while retaining prose', () => {
+    const body = `import Gallery from '../../components/Gallery.astro';
+import {
+  photos,
+} from './photos';
+
+export const title = 'internal';
+
+たばこと塩の博物館は、墨田区にある博物館である。
+
+<Gallery images={photos.filter((photo) => photo.width > 0)} />
+
+<aside>展示の紹介です。</aside>
+
+{title}
+`;
+    expect(getExcerpt(body, 200)).toBe('たばこと塩の博物館は、墨田区にある博物館である。 展示の紹介です。');
+  });
+
   test('strips markdown and truncates', () => {
     const excerpt = getExcerpt('# Heading\n\nこれは **テスト** [link](https://example.com) です。', 11);
     expect(excerpt).toBe('Heading これは…');
@@ -94,6 +113,14 @@ describe('getExcerpt', () => {
 });
 
 describe('archived helpers', () => {
+  test('accepts content entries without a body', () => {
+    const post = fromContentEntry({ id: 'empty', data: {
+      title: '本文なし', createdAt: '2026-11-03', archived: false,
+    } });
+    expect(post.body).toBe('');
+    expect(getExcerpt(post.body, 160)).toBe('');
+  });
+
   test('adds Archived suffix to archived post titles', () => {
     expect(getDisplayTitle('ブログをリニューアルしました', true)).toBe(
       'ブログをリニューアルしました (Archived)',

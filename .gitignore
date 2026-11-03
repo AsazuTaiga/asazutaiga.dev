@@ -4,6 +4,8 @@
 # astro
 /.astro
 /dist
+/.media/
+/.media-cache/
 
 # coverage
 /coverage

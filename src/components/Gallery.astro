@@ -1,0 +1,128 @@
+---
+import { mediaUrl, type GalleryPhoto } from '../lib/gallery';
+
+interface Props {
+  images: GalleryPhoto[];
+  label?: string;
+  initialCount?: number;
+  galleryHref?: string;
+}
+
+const { images, label = '写真ギャラリー', initialCount = 9, galleryHref } = Astro.props;
+const pageSize = Math.max(1, Math.floor(initialCount) || 9);
+const base = import.meta.env.DEV ? '/media' : (import.meta.env.PUBLIC_MEDIA_BASE_URL ?? '');
+if (base && base !== '/media' && !/^https:\/\/[^/]+/.test(base)) {
+  throw new Error('PUBLIC_MEDIA_BASE_URL には HTTPS の画像配信 URL を指定してください。');
+}
+const photos = images.map((photo) => ({ ...photo,
+  src: mediaUrl(photo.src, base), thumbnail: mediaUrl(photo.thumbnail ?? photo.src, base) }));
+const displayedPhotos = galleryHref ? photos.slice(0, pageSize) : photos;
+---
+
+<photo-gallery aria-label={label} data-page-size={pageSize}>
+  <div class="gallery-grid">
+    {displayedPhotos.map((photo, index) => (
+      <button class="gallery-thumbnail" type="button" hidden={index >= pageSize}
+        aria-label={`${photo.alt || `写真 ${index + 1}`}を拡大表示`}
+        data-src={photo.src} data-alt={photo.alt}>
+        <img src={index < pageSize ? photo.thumbnail : undefined}
+          data-thumbnail={photo.thumbnail} alt={photo.alt}
+          width={photo.thumbnailWidth ?? photo.width} height={photo.thumbnailHeight ?? photo.height}
+          loading="lazy" decoding="async" />
+      </button>
+    ))}
+  </div>
+  {galleryHref
+    ? <a class="gallery-more" href={galleryHref}>すべての写真を見る（{photos.length}枚） →</a>
+    : photos.length > pageSize && <button class="gallery-more" type="button">もっと見る（残り {photos.length - pageSize} 枚）</button>}
+  <dialog aria-label="画像の拡大表示">
+    <button class="gallery-close" type="button" aria-label="拡大表示を閉じる" autofocus>閉じる ×</button>
+    <button class="gallery-prev" type="button" aria-label="前の写真">‹</button>
+    <figure>
+      <img class="gallery-expanded" alt="" />
+      <figcaption aria-live="polite"></figcaption>
+    </figure>
+    <button class="gallery-next" type="button" aria-label="次の写真">›</button>
+  </dialog>
+</photo-gallery>
+
+<script>
+  class PhotoGallery extends HTMLElement {
+    connectedCallback() {
+      if (this.dataset.initialized) return;
+      this.dataset.initialized = 'true';
+      const dialog = this.querySelector('dialog')!;
+      const expanded = this.querySelector<HTMLImageElement>('.gallery-expanded')!;
+      const caption = this.querySelector('figcaption')!;
+      const buttons = [...this.querySelectorAll<HTMLButtonElement>('.gallery-thumbnail')];
+      const previous = this.querySelector<HTMLButtonElement>('.gallery-prev')!;
+      const next = this.querySelector<HTMLButtonElement>('.gallery-next')!;
+      const more = this.querySelector<HTMLButtonElement>('button.gallery-more');
+      const pageSize = Number(this.dataset.pageSize);
+      let current = 0;
+      let trigger: HTMLButtonElement | undefined;
+      let previousOverflow = '';
+      const show = (index: number) => {
+        current = index;
+        expanded.src = buttons[index].dataset.src!;
+        expanded.alt = buttons[index].dataset.alt ?? '';
+        caption.textContent = `${index + 1} / ${buttons.length}${expanded.alt ? ` — ${expanded.alt}` : ''}`;
+        previous.disabled = index === 0;
+        next.disabled = index === buttons.length - 1;
+      };
+      buttons.forEach((button, index) => button.addEventListener('click', () => {
+        trigger = button;
+        show(index);
+        previousOverflow = document.documentElement.style.overflow;
+        document.documentElement.style.overflow = 'hidden';
+        dialog.showModal();
+      }));
+      more?.addEventListener('click', () => {
+        const hidden = buttons.filter((button) => button.hidden);
+        hidden.slice(0, pageSize).forEach((button) => {
+          const image = button.querySelector('img')!;
+          image.src = image.dataset.thumbnail!;
+          button.hidden = false;
+        });
+        const remaining = buttons.filter((button) => button.hidden).length;
+        if (!remaining) { more.hidden = true; hidden[0]?.focus(); }
+        else more.textContent = `もっと見る（残り ${remaining} 枚）`;
+      });
+      previous.addEventListener('click', () => { if (current > 0) show(current - 1); });
+      next.addEventListener('click', () => { if (current < buttons.length - 1) show(current + 1); });
+      dialog.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowLeft' && current > 0) { event.preventDefault(); show(current - 1); }
+        if (event.key === 'ArrowRight' && current < buttons.length - 1) { event.preventDefault(); show(current + 1); }
+      });
+      this.querySelector('.gallery-close')!.addEventListener('click', () => dialog.close());
+      dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
+      dialog.addEventListener('close', () => {
+        expanded.removeAttribute('src');
+        document.documentElement.style.overflow = previousOverflow;
+        trigger?.focus();
+      });
+    }
+  }
+  if (!customElements.get('photo-gallery')) customElements.define('photo-gallery', PhotoGallery);
+</script>
+
+<style>
+  photo-gallery { display: block; margin-block: 1.5rem; }
+  [hidden] { display: none !important; }
+  .gallery-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.65rem; }
+  .gallery-thumbnail { display: block; padding: 0; border: 0; border-radius: 6px; overflow: hidden; background: var(--line); cursor: zoom-in; aspect-ratio: 1; }
+  .gallery-thumbnail img { display: block; width: 100%; height: 100%; max-height: none; margin: 0; object-fit: cover; }
+  button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+  .gallery-more { display: block; width: fit-content; margin: 1rem auto; border: 1px solid var(--line-strong); border-radius: 4px; padding: 0.5rem 1rem; background: var(--paper); color: var(--ink); font: inherit; cursor: pointer; text-align: center; text-decoration: none; }
+  dialog { width: 100%; height: 100%; max-width: 100vw; max-height: 100dvh; margin: auto; padding: 3.5rem 0.5rem 0.5rem; border: 0; background: transparent; color: white; }
+  dialog[open] { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 0.5rem; }
+  dialog::backdrop { background: rgb(0 0 0 / 90%); }
+  figure { margin: 0; min-width: 0; }
+  .gallery-expanded { display: block; width: auto; height: auto; max-width: 100%; max-height: calc(100dvh - 9rem); margin: 0 auto; object-fit: contain; }
+  figcaption { text-align: center; margin-top: 0.5rem; font-size: 0.85rem; max-height: 3rem; overflow-y: auto; }
+  .gallery-close, .gallery-prev, .gallery-next { padding: 0.4rem 0.65rem; border: 1px solid #fff; border-radius: 4px; background: #222; color: #fff; font: inherit; cursor: pointer; }
+  .gallery-close { position: absolute; top: 0.75rem; right: 1rem; }
+  .gallery-prev, .gallery-next { font-size: 1.5rem; }
+  button:disabled { opacity: 0.3; cursor: default; }
+  @media (max-width: 480px) { .gallery-grid { gap: 0.35rem; } }
+</style>

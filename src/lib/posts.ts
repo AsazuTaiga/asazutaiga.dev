@@ -1,3 +1,7 @@
+import { unified } from 'unified';
+import remarkParse from 'remark-parse';
+import remarkMdx from 'remark-mdx';
+
 export type BlogPost = {
   slug: string;
   title: string;
@@ -13,7 +17,7 @@ export type YearPosts = {
 
 export type ContentPostEntryLike = {
   id: string;
-  body: string;
+  body?: string;
   data: {
     title: string;
     createdAt: string;
@@ -106,8 +110,43 @@ export const groupPostsByYear = (posts: BlogPost[]): YearPosts[] => {
   }));
 };
 
+const excerptParser = unified().use(remarkParse).use(remarkMdx);
+type ExcerptNode = {
+  type: string;
+  position?: { start: { offset?: number }; end: { offset?: number } };
+  children?: ExcerptNode[];
+};
+
+const stripMdxSyntax = (markdown: string): string => {
+  let tree: ExcerptNode;
+  try { tree = excerptParser.parse(markdown); }
+  catch { return markdown; } // Older Markdown may contain syntax that is not valid MDX.
+  const ranges: [number, number][] = [];
+  const visit = (node: ExcerptNode) => {
+    const start = node.position?.start.offset;
+    const end = node.position?.end.offset;
+    if (start === undefined || end === undefined) return;
+    if (['mdxjsEsm', 'mdxFlowExpression', 'mdxTextExpression'].includes(node.type)) {
+      ranges.push([start, end]);
+      return;
+    }
+    if (['mdxJsxFlowElement', 'mdxJsxTextElement'].includes(node.type)) {
+      const children = node.children ?? [];
+      if (!children.length) { ranges.push([start, end]); return; }
+      ranges.push([start, children[0].position!.start.offset!]);
+      ranges.push([children[children.length - 1].position!.end.offset!, end]);
+    }
+    node.children?.forEach(visit);
+  };
+  visit(tree);
+  for (const [start, end] of ranges.sort((a, b) => b[0] - a[0])) {
+    markdown = markdown.slice(0, start) + ' ' + markdown.slice(end);
+  }
+  return markdown;
+};
+
 const stripMarkdown = (markdown: string): string => {
-  return markdown
+  return stripMdxSyntax(markdown)
     .replace(/```[\s\S]*?```/g, ' ')
     .replace(/`([^`]+)`/g, '$1')
     .replace(/!\[[^\]]*\]\([^\)]*\)/g, ' ')
@@ -137,6 +176,6 @@ export const fromContentEntry = (entry: ContentPostEntryLike): BlogPost => {
     title: entry.data.title,
     createdAt: ensureDateFormat(entry.data.createdAt),
     archived: entry.data.archived,
-    body: entry.body,
+    body: entry.body ?? '',
   };
 };
